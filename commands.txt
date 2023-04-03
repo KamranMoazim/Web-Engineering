@@ -1,0 +1,6 @@
+dotnet new console
+
+---- create main function
+
+dotnet add ./BuberDinner.Api/ reference ./BuberDinner.Infrastructure/
+dotnet add reference ./MyLibrary/

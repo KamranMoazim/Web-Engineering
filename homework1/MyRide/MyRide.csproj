@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\RideLib\RideLib.csproj" />
+    <ProjectReference Include="..\AdminLib\AdminLib.csproj" />
+    <ProjectReference Include="..\LocationLib\LocationLib.csproj" />
+    <ProjectReference Include="..\DriverLib\DriverLib.csproj" />
+    <ProjectReference Include="..\PassengerLib\PassengerLib.csproj" />
+    <ProjectReference Include="..\VehicleLib\VehicleLib.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
