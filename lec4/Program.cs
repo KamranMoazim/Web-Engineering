@@ -9,6 +9,8 @@ namespace lec4
     {
         static void Main(string[] args)
         {
+            // * byte oriented streams
+
             // FileStream fOut = new FileStream("myText.txt", FileMode.Create);
 
             // Console.WriteLine((int)'A');
