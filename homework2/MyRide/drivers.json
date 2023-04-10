@@ -1,0 +1,56 @@
+[
+    {
+        "driverId": 2,
+        "name": "ali",
+        "age": 24,
+        "gender": "Male",
+        "address": "karachi Pakistan",
+        "phoneNo": "03232312123",
+        "currentLocation": {
+            "latitude": 2,
+            "longitude": 2
+        },
+        "vehicle": {
+            "type": "Bike",
+            "model": "2020",
+            "licensePlate": "LEW-1232"
+        },
+        "availability": true
+    },
+    {
+        "driverId": 3,
+        "name": "John Doe",
+        "age": 29,
+        "gender": "Male",
+        "address": "California USA",
+        "phoneNo": "131231231231",
+        "currentLocation": {
+            "latitude": 0,
+            "longitude": 0
+        },
+        "vehicle": {
+            "type": "Car",
+            "model": "2020",
+            "licensePlate": "RWE3123"
+        },
+        "availability": false
+    },
+    {
+        "driverId": 4,
+        "name": "bill",
+        "age": 45,
+        "gender": "Male",
+        "address": "Florida USA",
+        "phoneNo": "12312312312",
+        "currentLocation": {
+            "latitude": 0,
+            "longitude": 0
+        },
+        "vehicle": {
+            "type": "Car",
+            "model": "2022",
+            "licensePlate": "RWER4234"
+        },
+        "availability": false
+    }
+]
