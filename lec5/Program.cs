@@ -10,6 +10,10 @@ namespace lec5
         {
             // * charater base streams
 
+            // ! with file access 
+            // FileStream fOut = new FileStream("myText.txt", FileMode.Create, FileAccess.ReadWrite);
+
+
             // FileStream fOut = new FileStream("myText.txt", FileMode.Create);
             // StreamWriter sw = new StreamWriter(fOut);
 

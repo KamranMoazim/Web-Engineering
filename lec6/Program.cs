@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace lec6
 {
@@ -9,6 +6,33 @@ namespace lec6
     {
         static void Main(string[] args)
         {
+            /* 
+                ? ADO.NET
+                ! SqlConnection
+                    server
+                    database
+                    username
+                    password
+
+
+                ! SqlCommand
+                    - ExecuteNonQuery() --> insert / update / delete
+                        it returns int -- means how many records has changed / updated
+                    - ExecuteReader() --> select
+                        it returns SqlDataReader class object
+
+                    - ExecuteScalar() --> aggregator like min / max / avg
+                        it returns object
+            */
+
+
+            /*
+
+                MSSQLLocalDB
+                SqlServer ---> Express Edition
+                SqlServerManagementStudio
+            
+            */
 
         }
     }

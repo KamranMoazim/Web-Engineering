@@ -37,8 +37,8 @@
     },
     {
         "driverId": 4,
-        "name": "bill",
-        "age": 45,
+        "name": "bill updated",
+        "age": 34,
         "gender": "Male",
         "address": "Florida USA",
         "phoneNo": "12312312312",
@@ -50,6 +50,24 @@
             "type": "Car",
             "model": "2022",
             "licensePlate": "RWER4234"
+        },
+        "availability": false
+    },
+    {
+        "driverId": 5,
+        "name": "new ali",
+        "age": 30,
+        "gender": "Male",
+        "address": "Lahore Pakistan",
+        "phoneNo": "032131231232",
+        "currentLocation": {
+            "latitude": 0,
+            "longitude": 0
+        },
+        "vehicle": {
+            "type": "Bike",
+            "model": "2020",
+            "licensePlate": "LER13-132"
         },
         "availability": false
     }

@@ -30,13 +30,18 @@ namespace MyRide
             System.Console.WriteLine("--------------------- Loaded Drivers Successfully ---------------------");
 
             mainMenu();
-            int mainMenuChoice;// = Convert.ToInt32(System.Console.ReadLine());
+            int mainMenuChoice = 0;// = Convert.ToInt32(System.Console.ReadLine());
 
             do
             {
                 System.Console.Write("Press 1 to 4 to select an option:");
                 // mainMenuChoice = Convert.ToInt32(System.Console.ReadLine());
-                mainMenuChoice = Convert.ToInt32(readInput());
+                string? choice = readInput();
+                if (choice == "")
+                {
+                    continue;
+                }
+                mainMenuChoice = Convert.ToInt32(choice);
                 switch (mainMenuChoice)
                 {
                     case 1:
