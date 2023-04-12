@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdminLib\AdminLib.csproj" />
+    <ProjectReference Include="..\DriverLib\DriverLib.csproj" />
+    <ProjectReference Include="..\PassengerLib\PassengerLib.csproj" />
+    <ProjectReference Include="..\RideLib\RideLib.csproj" />
+    <ProjectReference Include="..\VehicleLib\VehicleLib.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DriverLib\DriverLib.csproj" />
+    <ProjectReference Include="..\LocationLib\LocationLib.csproj" />
+    <ProjectReference Include="..\PassengerLib\PassengerLib.csproj" />
+  </ItemGroup>
+
+</Project>
