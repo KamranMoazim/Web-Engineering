@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AdminLib\AdminLib.csproj" />
+    <ProjectReference Include="..\DBLib\DBLib.csproj" />
     <ProjectReference Include="..\DriverLib\DriverLib.csproj" />
     <ProjectReference Include="..\PassengerLib\PassengerLib.csproj" />
     <ProjectReference Include="..\RideLib\RideLib.csproj" />

@@ -1,5 +1,8 @@
 ﻿
+using DBLib;
 using DriverLib;
+using LocationLib;
+using RideLib;
 using System.Xml.Linq;
 using VehicleLib;
 
@@ -7,12 +10,85 @@ namespace AdminLib
 {
     public class Admin
     {
+        private DbManager dbManager = new DbManager();
         private List<Driver> allDriversList = new List<Driver>();
         public List<Driver> AllDriversList
         {
-            get { return allDriversList; }
-            set { allDriversList = value; }
+            get { return dbManager.getDriverdList(); }
+            // set { allDriversList = value; }
         }
+
+        // to assign a driver to Ride Request (if we have driver available)
+        public bool assignDriver(Ride ride)
+        {
+            var allDriversList = dbManager.getDriverdList();
+
+            Driver tempDriver = new Driver();
+            float? minDistance = 0;
+
+            if (allDriversList.Count == 0)  // means we have no drivers - zero drivers in the list
+            {
+                return false;
+            }
+
+            bool rideTypeMatced = true;
+            string? rideType;
+            int count = 3; // as we have only three type of Vehicles
+
+            // we will loop until we find user requierment fulfilld of particaular Vehicle Type 
+            do
+            {
+                // Entering Ride Type
+                rideType = getRideType();
+                count--;
+
+                foreach (var driver in allDriversList)
+                {
+                    if (driver.availability) // checking driver is available
+                    {
+                        if (driver.vehicle!.type == rideType)
+                        {
+                            rideTypeMatced = false;
+                            if (minDistance != 0)
+                            {
+                                float? tempMinDistance = getDistance(ride.startLocation, driver.currentLocation!);
+                                if (tempMinDistance < minDistance) // giving ride to nearest available driver then previous one
+                                {
+                                    tempDriver = driver;
+                                    minDistance = tempMinDistance;
+                                }
+                            }
+                            else // giving ride to first available driver
+                            {
+                                tempDriver = driver;
+                                minDistance = getDistance(ride.startLocation, driver.currentLocation!);
+                            }
+                        }
+                    }
+                }
+
+                if (rideTypeMatced)
+                {
+                    System.Console.WriteLine("Sorry your required Ride Type NOT FOUND please select other option");
+                }
+
+
+            } while (count > 0 && rideTypeMatced);
+            // means rider Want a Car But we don't have Car right now, so again prompting for input
+
+
+            if (rideTypeMatced || count == 0)
+            {
+                return false;
+            }
+
+
+            ride.driver = tempDriver; // setting driver of current ride
+            ride.driver.availability = false; // setting availability to false // means same driver cannot be booked until freed
+
+            return true;
+        }
+
 
         // add new driver to list
         public bool addDriver()
@@ -102,9 +178,10 @@ namespace AdminLib
 
 
             // adding driver to list
-            allDriversList.Add(newDriver);
+            // allDriversList.Add(newDriver);
+            dbManager.addDriver(newDriver);
 
-            System.Console.WriteLine($"*************************** New Added Driver ID : {newDriver.driverId} ***************************");
+            System.Console.WriteLine($"*************************** New Driver Added Successfully ***************************");
 
             return true;
         }
@@ -118,7 +195,7 @@ namespace AdminLib
             int driverId = Convert.ToInt32(readInput());
 
 
-            Driver? existingDriver = allDriversList.Find(dri => dri.driverId == driverId); // chcking if Driver Exits or Not
+            Driver? existingDriver = dbManager.getDriverById(driverId); // chcking if Driver Exits or Not
 
             if (existingDriver == null)
             {
@@ -240,9 +317,18 @@ namespace AdminLib
                 existingDriver.vehicle!.licensePlate = licensePlate;
             }
 
-            System.Console.WriteLine("--------------------- Driver Updated Successully ---------------------");
+            if(dbManager.isDriverExists(existingDriver.driverId))
+            {
+                dbManager.updateDriver(existingDriver);
+                System.Console.WriteLine("--------------------- Driver Updated Successully ---------------------");
+                return true;
+            }
+            else
+            {
+                System.Console.WriteLine("--------------------- Driver Do Not Exists ---------------------");
+                return false;
+            }
 
-            return true;
         }
 
         public bool removeDriver()
@@ -252,25 +338,33 @@ namespace AdminLib
             int driverId = Convert.ToInt32(readInput());
 
 
-            Driver? existingDriver = allDriversList.Find(dri => dri.driverId == driverId); // chcking if Driver Exits or Not
+            /* Driver? existingDriver = allDriversList.Find(dri => dri.driverId == driverId); // chcking if Driver Exits or Not
 
-            if (existingDriver == null)
+             if (existingDriver == null)
+             {
+                 System.Console.WriteLine(" ERROR - Driver with given ID not FOUND! ");
+                 return false;
+             }
+
+             allDriversList.Remove(existingDriver);*/ // removing Driver from the List
+
+            if (dbManager.isDriverExists(driverId))
             {
-                System.Console.WriteLine(" ERROR - Driver with given ID not FOUND! ");
+                dbManager.removeDriver(driverId);
+                System.Console.WriteLine("--------------------- Driver Removed Successully ---------------------");
+                return true;
+            }
+            else
+            {
+                System.Console.WriteLine("--------------------- Driver Do Not Exists ---------------------");
                 return false;
             }
-
-            allDriversList.Remove(existingDriver); // removing Driver from the List
-            System.Console.WriteLine(" Driver removed successfully ");
-
-            return true;
         }
 
         public bool searchDriver()
         {
 
             List<Driver> foundedDriversList = new List<Driver>();
-            foundedDriversList = allDriversList;
 
             string? name = "";
             int age = 0;
@@ -351,7 +445,22 @@ namespace AdminLib
             // following below, we are filtering for each user input check
             // *************  ************* ************* ************* ************* ************* 
 
+            Vehicle searchingDriverVehicle = new Vehicle 
+            {
+                licensePlate = licensePlate,
+                model = model,
+                type = type
+            };
 
+            Driver searchingDriverData = new Driver
+            {
+                name = name,
+                age = age,
+                gender = gender,
+                address = address,
+                vehicle = searchingDriverVehicle
+            };
+            /*
             if (name != "")
             {
                 foundedDriversList = foundedDriversList.FindAll(dri => dri.name == name);
@@ -385,7 +494,9 @@ namespace AdminLib
             if (licensePlate != "")
             {
                 foundedDriversList = foundedDriversList.FindAll(dri => dri.vehicle!.licensePlate == licensePlate);
-            }
+            }*/
+
+            foundedDriversList = dbManager.searchDriver(searchingDriverData);
 
 
             // ************* ************* ************* ************* ************* ************* 
@@ -419,7 +530,7 @@ namespace AdminLib
         public Driver? isDriverExists(int driverId)
         {
 
-            Driver? existingDriver = allDriversList.Find(dri => dri.driverId == driverId);
+            Driver? existingDriver = dbManager.getDriverById(driverId);
 
             return existingDriver;
         }
@@ -430,6 +541,38 @@ namespace AdminLib
             string? input = System.Console.ReadLine();
             System.Console.ResetColor();
             return input;
+        }
+
+        private string? getRideType()
+        {
+            string? rideType = "";
+            while (true)
+            {
+                System.Console.Write("Enter Ride Type:");
+                // rideType = System.Console.ReadLine();
+                rideType = readInput();
+                if (rideType == "Bike" || rideType == "Rickshaw" || rideType == "Car")
+                {
+                    break;
+                }
+                else
+                {
+                    System.Console.WriteLine("Please Enter Only (Bike - Rickshaw - Car)");
+                }
+            }
+
+            return rideType;
+        }
+
+        // function to calculate distance b/w two points
+        public static float getDistance(Location p1, Location p2)
+        {
+
+            double num6 = p1.longitude - p2.longitude;
+            double num7 = p1.latitude - p2.latitude;
+
+            double num9 = Math.Sqrt((num7 * num7) + (num6 * num6));
+            return (float)(num9);
         }
     }
 }

@@ -63,9 +63,6 @@ namespace lec7
             {
                 Console.WriteLine($"id:{reader.GetValue(0)} , UserName:{reader[1]} , Password:{reader.GetValue(2)}");
             }
-            
-
-
 
             conn.Close();*/
 

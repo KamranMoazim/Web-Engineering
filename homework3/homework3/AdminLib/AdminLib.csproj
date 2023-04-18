@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DBLib\DBLib.csproj" />
     <ProjectReference Include="..\DriverLib\DriverLib.csproj" />
     <ProjectReference Include="..\VehicleLib\VehicleLib.csproj" />
   </ItemGroup>

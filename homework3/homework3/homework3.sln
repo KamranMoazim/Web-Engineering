@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleLib", "VehicleLib\Ve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRide", "MyRide\MyRide.csproj", "{E4A763F4-0A4A-4443-A22A-DA583D0EA774}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLib", "DBLib\DBLib.csproj", "{0BEBAE23-7982-4E72-8712-BE3C5F491E8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{E4A763F4-0A4A-4443-A22A-DA583D0EA774}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4A763F4-0A4A-4443-A22A-DA583D0EA774}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4A763F4-0A4A-4443-A22A-DA583D0EA774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BEBAE23-7982-4E72-8712-BE3C5F491E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEBAE23-7982-4E72-8712-BE3C5F491E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEBAE23-7982-4E72-8712-BE3C5F491E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEBAE23-7982-4E72-8712-BE3C5F491E8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

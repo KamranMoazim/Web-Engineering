@@ -30,70 +30,7 @@ namespace RideLib
             return true;
         }
 
-        // to assign a driver to Ride Request (if we have driver available)
-        public bool assignDriver(List<Driver> allDriversList)
-        {
-            Driver tempDriver = new Driver();
-            float? minDistance = 0;
-
-            if (allDriversList.Count == 0)  // means we have no drivers - zero drivers in the list
-            {
-                return false;
-            }
-
-            bool rideTypeMatced = true;
-            string? rideType;
-            int count = 3; // as we have only three type of Vehicles
-
-            // we will loop until we find user requierment fulfilld of particaular Vehicle Type 
-            do
-            {
-                // Entering Ride Type
-                rideType = getRideType();
-                count--;
-
-                foreach (var driver in allDriversList)
-                {
-                    if (driver.availability) // checking driver is available
-                    {
-                        if (driver.vehicle!.type == rideType)
-                        {
-                            rideTypeMatced = false;
-                            if (minDistance != 0)
-                            {
-                                float? tempMinDistance = getDistance(this.startLocation, driver.currentLocation!);
-                                if (tempMinDistance < minDistance) // giving ride to nearest available driver then previous one
-                                {
-                                    tempDriver = driver;
-                                    minDistance = tempMinDistance;
-                                }
-                            }
-                            else // giving ride to first available driver
-                            {
-                                tempDriver = driver;
-                                minDistance = getDistance(this.startLocation, driver.currentLocation!);
-                            }
-                        }
-                    }
-                }
-
-                if (rideTypeMatced)
-                {
-                    System.Console.WriteLine("Sorry your required Ride Type NOT FOUND please select other option");
-                }
-
-
-            } while (count > 0 && rideTypeMatced);
-            // means rider Want a Car But we don't have Car right now, so again prompting for input
-
-
-
-            driver = tempDriver; // setting driver of current ride
-            driver.availability = false; // setting availability to false // means same driver cannot be booked until freed
-
-            return true;
-        }
-
+        
         // this function simply takes input of start and end locations
         public bool getLocations()
         {
@@ -154,7 +91,7 @@ namespace RideLib
 
         // passenger will give rating to particular driver
         // which will be added to drivers Rating list
-        public bool giveRating()
+        public int giveRating()
         {
             int intRating = 5;
             while (true)
@@ -167,12 +104,9 @@ namespace RideLib
                 if (intRating <= 5 && intRating >= 1)
                 {
                     driver.addRating(intRating);  // adding rating to drivers rating list
-                    break;
+                    return intRating;
                 }
-
             }
-
-            return true;
         }
 
 
@@ -189,26 +123,7 @@ namespace RideLib
             return (float)(num9);
         }
 
-        private string? getRideType()
-        {
-            string? rideType = "";
-            while (true)
-            {
-                System.Console.Write("Enter Ride Type:");
-                // rideType = System.Console.ReadLine();
-                rideType = readInput();
-                if (rideType == "Bike" || rideType == "Rickshaw" || rideType == "Car")
-                {
-                    break;
-                }
-                else
-                {
-                    System.Console.WriteLine("Please Enter Only (Bike - Rickshaw - Car)");
-                }
-            }
 
-            return rideType;
-        }
 
 
         private static string? readInput()

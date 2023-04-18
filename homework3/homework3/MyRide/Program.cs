@@ -1,7 +1,9 @@
 ﻿
 
 using AdminLib;
+using DBLib;
 using DriverLib;
+using Microsoft.Data.SqlClient;
 using PassengerLib;
 using RideLib;
 using VehicleLib;
@@ -18,13 +20,16 @@ namespace MyRide
             Ride ride = new Ride();
             Admin admin = new Admin();
 
+            DbManager dbManager = new DbManager();
+
             mainMenu();
             int mainMenuChoice;
 
             do
             {
                 System.Console.Write("Press 1 to 4 to select an option:");
-                mainMenuChoice = Convert.ToInt32(readInput());
+                // mainMenuChoice = Convert.ToInt32(readInput());
+                mainMenuChoice = intInput();
                 switch (mainMenuChoice)
                 {
                     case 1:
@@ -53,8 +58,11 @@ namespace MyRide
 
 
 
-                            if (ride.assignDriver(admin.AllDriversList))  // making sure we have a Driver to fulfill Rider Request
+                            if (admin.assignDriver(ride))  // making sure we have a Driver to fulfill Rider Request
                             {
+                                // making driver booked because it is booked by the ride
+                                dbManager.updateDriver(ride.driver);
+
                                 System.Console.WriteLine("-------------------- THANK YOU ------------------");
                                 // printing price for Ride
                                 System.Console.WriteLine($"Price for this ride is: {ride.calculatePrice()}");
@@ -68,13 +76,13 @@ namespace MyRide
                                     if (cancelChoice == "Y")
                                     {
 
-                                        {
-                                            Console.WriteLine("Happy Travel...!");
-                                            ride.giveRating();
-                                            ride.driver.availability = true; // freeing the driver from Ride
-                                            // ************ save ride to DB
-                                        }
-
+                                        Console.WriteLine("Happy Travel...!");
+                                        var rating = ride.giveRating();
+                                        ride.driver.availability = true; // freeing the driver from Ride
+                                            
+                                        dbManager.updateDriver(ride.driver);
+                                        // ************ save rating to DB
+                                        dbManager.addRating(ride.driver.driverId, rating);
 
                                     }
                                     System.Console.WriteLine("--------------------- Exiting Rider Menu ---------------------");
@@ -95,7 +103,8 @@ namespace MyRide
                         {
 
                             System.Console.Write("Enter ID:");
-                            int driverId = Convert.ToInt32(readInput());
+                            // int driverId = Convert.ToInt32(readInput());
+                            int driverId = intInput();
                             System.Console.Write("Enter Name:");
                             string? name = readInput();
 
@@ -103,7 +112,7 @@ namespace MyRide
                             if (driver != null)
                             {
                                 System.Console.WriteLine($"Hello {driver.name}");
-                                driver.updateLocation();
+                                // driver.updateLocation();
 
                                 driverMenu();
                                 int driverMenuChoice;
@@ -112,17 +121,21 @@ namespace MyRide
                                 {
                                     System.Console.Write("Please Select Only from 1-3 ");
 
-                                    driverMenuChoice = Convert.ToInt32(readInput());
+                                    driverMenuChoice = intInput();
 
                                     if (driverMenuChoice == 1)
                                     {
                                         driver.updateAvailability();
+                                        
+                                        dbManager.updateDriver(driver);
                                         System.Console.WriteLine("--------------------- Availability Updated Successully ---------------------");
                                     
                                     }
                                     else if (driverMenuChoice == 2)
                                     {
                                         driver.updateLocation();
+
+                                        dbManager.updateDriver(driver);
                                         System.Console.WriteLine("--------------------- Location Updated Successully ---------------------");
                                     }
                                     else if (driverMenuChoice == 3)
@@ -152,7 +165,7 @@ namespace MyRide
                             {
                                 System.Console.Write("Press 1 to 5 to select an option:");
 
-                                adminMenuChoice = Convert.ToInt32(readInput());
+                                adminMenuChoice = intInput();
 
                                 if (adminMenuChoice == 1)
                                 {
@@ -244,6 +257,24 @@ namespace MyRide
             System.Console.WriteLine("4. Search Driver");
             System.Console.WriteLine("5. Exit as Admin");
             System.Console.WriteLine("");
+        }
+
+        private static int intInput()
+        {
+            int val = 0;
+            while (true)
+            {
+                try
+                {
+                    val = Convert.ToInt32(readInput());
+                    break;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Please Enter Only Number");
+                }
+            }
+            return val;
         }
     }
 
