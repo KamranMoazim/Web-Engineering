@@ -1,0 +1,59 @@
+﻿@using lec10.Models
+@model Student
+@{
+    Layout = null;
+    // Student s = Model;
+}
+
+<div>
+    <h1>
+        As a Model
+    </h1>
+    <h2>Student Index Page</h2>
+
+    <h3> @Model.Id </h3>
+    <h3> @Model.Name </h3>
+    <h3> @Model.Semester </h3>
+
+    @*  
+    <h1>----------------</h1>
+    <h3> @s.Id </h3>
+    <h3> @s.Name </h3>
+    <h3> @s.Semester </h3>
+    *@
+
+    @*
+    <h1>----------------</h1>
+    <h3> @Model.Id </h3>
+    <h3> @Model.Name </h3>
+    <h3> @Model.Semester </h3>
+    *@
+
+
+
+    @* this is ViewBag *@
+    <h1>
+        View Bag
+        --
+        @ViewBag.abc
+    </h1>
+
+
+
+    @* this is ViewData *@
+    <h1>
+        View Data
+        --
+        @ViewData["x"]
+    </h1>
+
+
+
+    @* this is TempData *@
+    <h1>
+        Temp Data
+        --
+        @TempData["x"]
+    </h1>
+
+</div>
