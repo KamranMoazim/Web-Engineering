@@ -1,0 +1,22 @@
+@{
+  ViewData["Title"] = "Register";
+}
+
+<div class="container">
+  <form class="container m-3" action="/Auth/Register" method="post">
+    <div class="row mb-3">
+      <label class="col-3 col-form-label">Email</label>
+      <input type="email" class="form-control" name="email">
+    </div>
+    <div class="row mb-3">
+      <label class="col-3 col-form-label">Password</label>
+      <input type="password" class="form-control" name="password">
+    </div>
+    <div class="row mb-3">
+      <label class="col-3 col-form-label">Confirm Password</label>
+      <input type="password" class="form-control" name="confirmPassword">
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Register" />
+  </form>
+</div>

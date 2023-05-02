@@ -37,7 +37,7 @@ namespace lec10.Controllers
             string s = "some data by controller for ViewBag";
             ViewBag.abc = s;
 
-            // tempdata
+            // viewdata
             ViewData["x"] = "some data by controller for ViewData";
 
             // tempdata
