@@ -1,0 +1,52 @@
+@model lec11.Models.User
+
+@{
+    ViewData["Title"] = "SignIn";
+}
+
+@*
+<form action="/User/SignIn" method="post">
+
+<label>
+UserName
+</label>
+<input type="text" name="username" />
+
+
+<label>
+Password
+</label>
+<input type="password" name="password" />
+
+<input type="submit" value="SignIn" />
+
+</form>
+*@
+
+
+@if ((string)ViewData["Error"] != "")
+{
+    <h1>
+    @ViewData["Error"]
+</h1>
+}
+
+<form action="/User/SignIn" method="post">
+
+    <label>
+        UserName
+    </label>
+    <input type="text" name="UserName" />
+
+
+    <label>
+        Password
+    </label>
+    <input type="password" name="Password" />
+
+    <input type="submit" value="SignIn" />
+
+</form>
+
+
+

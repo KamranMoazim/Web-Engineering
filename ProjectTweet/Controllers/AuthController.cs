@@ -1,19 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using ProjectTweet.Models;
+using ProjectTweet.Models.Repositories;
 
 namespace ProjectTweet.Controllers
 {
     [Route("[controller]")]
     public class AuthController : Controller
     {
+        private readonly UserRepsitory userRepsitory;
+
         public AuthController()
         {
-            Response.Cookies.Append("is_logged_in", false.ToString());
+            // Response.Cookies.Append("is_logged_in", false.ToString());
+            userRepsitory = new UserRepsitory();
         }
 
         [HttpGet("Login")]
@@ -23,19 +23,17 @@ namespace ProjectTweet.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(UserModel user)
         {
-            Console.WriteLine(email);
-            Console.WriteLine(password);
 
-            if (email == "test@email.com" && password == "test")
+            UserModel userModel = userRepsitory.login(user);
+
+            if (userModel == null)
             {
-                return RedirectToAction("MyProfile");
+                return View();
             }
 
-            ViewBag.Error = "Invalid email or password";
-
-            return View();
+            return View("MyProfile", userModel);
         }
 
         [HttpGet("Logout")]
@@ -51,19 +49,30 @@ namespace ProjectTweet.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(string email, string password, string confirmPassword)
+        public IActionResult Register(UserModel user, string confirmPassword)
         {
-            Console.WriteLine(email);
-            Console.WriteLine(password);
-            Console.WriteLine(confirmPassword);
 
-            return View();
+            if (user.Password != confirmPassword)
+            {
+                return View();
+            }
+
+            UserModel userModel = userRepsitory.register(user);
+
+            return View("MyProfile", userModel);
         }
 
         [HttpGet("MyProfile")]
         public IActionResult MyProfile()
         {
-            return View();
+            UserModel userModel = new UserModel
+            {
+                UserId = 1,
+                Username = "test",
+                Password = "test"
+            };
+
+            return View(userModel);
         }
     }
 }

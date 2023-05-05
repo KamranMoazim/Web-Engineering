@@ -7,29 +7,20 @@ namespace lec10.Controllers
     {
         private StudentRepository studentRepository;
 
-        public StudentController() { 
+        public StudentController()
+        {
             studentRepository = new StudentRepository();
         }
 
-      
-        [HttpGet("id")]
-        public IActionResult GetSingle(int id)
-        {
-            Console.WriteLine(id);
-            Console.WriteLine("---------------------------------------------------");
-            Student student = studentRepository.GetStudent(id);
 
-            return View(student);
-        }
-
-
+        [HttpGet]
         public IActionResult Index()
         {
             // Controller to View ways :
             // as a model
             // view bag
             // view data
-            // temo data
+            // temp data
 
             Student student = studentRepository.GetStudent(1);
 
@@ -46,11 +37,22 @@ namespace lec10.Controllers
             return View(student);
         }
 
+
+        [HttpGet("Student/{id}")]
+        public IActionResult GetSingle(int id)
+        {
+            Console.WriteLine(id);
+            Student student = studentRepository.GetStudent(id);
+
+            return View(student);
+        }
+
+
         public IActionResult AllStudents()
         {
             return View(studentRepository.GetAllStudent());
         }
-        
+
 
         public IActionResult Add()
         {
@@ -68,7 +70,7 @@ namespace lec10.Controllers
             return View();
         }
 
-       
+
 
 
     }

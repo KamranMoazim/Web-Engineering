@@ -1,4 +1,4 @@
-﻿
+﻿@using lec10.Models
 @model List<lec10.Models.Student>
 
 
@@ -9,7 +9,7 @@
 <div>
     <h2>All Students Page</h2>
 
-    @if(Model != null)
+    @if (Model != null)
     {
         foreach (var stu in Model)
         {
