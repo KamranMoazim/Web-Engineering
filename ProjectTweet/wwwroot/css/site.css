@@ -11,8 +11,22 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  
 }
 
 body {
   margin-bottom: 60px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.flexbuttons{
+  display: inline-flex;
+  /* justify-content: space-evenly; */
+}
+
+.Full-Width {
+  width: 100%
 }

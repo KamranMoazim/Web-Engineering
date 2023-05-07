@@ -62,6 +62,36 @@ namespace ProjectTweet.Controllers
             return View("MyProfile", userModel);
         }
 
+        [HttpPost("RemoveFollow/{userId}/{followedUserId}")]
+        public IActionResult RemoveFollower(int userId, int followedUserId)
+        {
+
+            bool v = userRepsitory.removeFollwerOrFollowee(userId, followedUserId);
+
+            if (v == false)
+            {
+                return View();
+            }
+
+            return Redirect("MyProfile");
+        }
+
+
+
+        [HttpPost("MyProfile")]
+        public IActionResult MyProfile(UserModel user)
+        {
+
+            bool v = userRepsitory.updateUserProfile(user);
+
+            if (v == false)
+            {
+                return View();
+            }
+
+            return Redirect("MyProfile");
+        }
+
         [HttpGet("MyProfile")]
         public IActionResult MyProfile()
         {
@@ -69,10 +99,50 @@ namespace ProjectTweet.Controllers
             {
                 UserId = 1,
                 Username = "test",
-                Password = "test"
+                FirstName = "test",
+                LastName = "test",
+                Password = "test",
+                Follower = new List<FollowUserModel>(){
+                    new FollowUserModel(){
+                        UserId = 2,
+                        Username = "test2",
+                        FirstName = "test2",
+                    },
+                    new FollowUserModel(){
+                        UserId = 3,
+                        Username = "test3",
+                        FirstName = "test3",
+                    },
+                },
+                Followee = new List<FollowUserModel>(){
+                    new FollowUserModel(){
+                        UserId = 4,
+                        Username = "test4",
+                        FirstName = "test4",
+                    },
+                    new FollowUserModel(){
+                        UserId = 5,
+                        Username = "test5",
+                        FirstName = "test5",
+                    },
+                }
             };
 
             return View(userModel);
+        }
+
+        [HttpGet("FollowOthers")]
+        public IActionResult FollowOthers()
+        {
+            List<ProfileModel> profileModels = this.userRepsitory.getProfilesByJoinedDate();
+            return View(profileModels);
+        }
+
+        [HttpPost("FollowOthers/{toFollow}")]
+        public IActionResult FollowOtherRequest(int toFollow)
+        {
+            int userId = 0;
+            return View("FollowOthers");
         }
     }
 }

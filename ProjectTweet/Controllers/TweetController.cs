@@ -1,6 +1,11 @@
 
 using Microsoft.AspNetCore.Mvc;
 
+
+// Follow Other Page
+// Shared ReTweet
+// Friends Tweets
+
 namespace ProjectTweet.Controllers
 {
     [Route("[controller]")]
@@ -17,12 +22,41 @@ namespace ProjectTweet.Controllers
             return View();
         }
 
-        [HttpGet("SingleTweet")]
-        public IActionResult SingleTweet()
+        [HttpGet("ViewSingleTweet")]
+        public IActionResult ViewSingleTweet()
         // int id,
         {
             return View();
         }
+
+        [HttpGet("CreateTweet")]
+        public IActionResult CreateTweet()
+        {
+            return View();
+        }
+
+        [HttpPost("CreateTweet")]
+        public IActionResult CreateTweet(string title, string tags, string detail)
+        {
+            Console.WriteLine(title);
+            Console.WriteLine(tags);
+            Console.WriteLine(detail);
+
+            return View();
+        }
+
+        [HttpGet("FriendsTweets")]
+        public IActionResult FriendsTweets()
+        {
+            return View();
+        }
+
+        [HttpGet("SharedTweets")]
+        public IActionResult SharedTweets()
+        {
+            return View();
+        }
+
 
         [HttpPost("CommentTweet")]
         public IActionResult CommentTweet(string comment)
@@ -33,25 +67,9 @@ namespace ProjectTweet.Controllers
             return View("SingleTweet");
         }
 
-        [HttpGet("CreateTweet")]
-        public IActionResult CreateTweet()
+        [HttpGet("TagTweets/{tag}")]
+        public IActionResult TagTweets(string tag)
         {
-            return View();
-        }
-
-        [HttpGet("TagTweet")]
-        public IActionResult TagTweet(string tag)
-        {
-            return View("SingleTweet");
-        }
-
-        [HttpPost("CreateTweet")]
-        public IActionResult CreateTweet(string title, string tags, string detail)
-        {
-            Console.WriteLine(title);
-            Console.WriteLine(tags);
-            Console.WriteLine(detail);
-
             return View();
         }
     }
