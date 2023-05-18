@@ -1,23 +1,23 @@
 ﻿@using lec10.Models
-@model List<lec10.Models.Student>
+@model List<Student>
 
 
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <div>
-    <h2>All Students Page</h2>
+	<h2>All Students Page</h2>
 
-    @if (Model != null)
-    {
-        foreach (var stu in Model)
-        {
-            <h1>----------------</h1>
-            <h3> @stu.Id </h3>
-            <h3> @stu.Name </h3>
-            <h3> @stu.Semester </h3>
-        }
-    }
+	@if (Model != null)
+	{
+		foreach (var stu in Model)
+		{
+			<h1>----------------</h1>
+			<h3> @stu.Id </h3>
+			<h3> @stu.Name </h3>
+			<h3> @stu.Semester </h3>
+		}
+	}
 
 </div>

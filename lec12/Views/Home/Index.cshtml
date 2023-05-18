@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var x = "hello";
+}
+
+<div class="text-center">
+    <h1>
+        @Model
+    </h1>
+
+    <div>
+        <partial name="_PartialOne" model="@Model" />
+        <partial name="_PartialOne" model="x" />
+
+        <partial name="_PartialOne" model="x" />
+
+    </div>
+</div>

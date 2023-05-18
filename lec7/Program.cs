@@ -7,7 +7,7 @@ namespace lec7
     {
         static void Main(string[] args)
         {
-            /*          
+            /*
              string connnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MyDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
              SqlConnection conn = new SqlConnection(connnectionString);

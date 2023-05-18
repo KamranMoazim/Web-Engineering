@@ -35,7 +35,7 @@ namespace lec6
             
             */
 
-            Console.WriteLine("lfjsdkf sdlkfj dkfj ");
+            Console.WriteLine("Hello World!");
 
         }
     }

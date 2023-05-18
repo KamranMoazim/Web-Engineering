@@ -1,6 +1,6 @@
-﻿using lec9.Models;
+﻿using System.Diagnostics;
+using lec9.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace lec9.Controllers
 {
@@ -22,5 +22,6 @@ namespace lec9.Controllers
         {
             return View();
         }
+
     }
 }
