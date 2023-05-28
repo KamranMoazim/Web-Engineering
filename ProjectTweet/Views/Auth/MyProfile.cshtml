@@ -32,9 +32,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12 text-center">
-            <input class="btn btn-primary" type="submit" value="Update" />
+    <div class="row  p-5">
+        <div class="col-12">
+            <input class="btn btn-primary" type="submit" value="Update Profile" />
         </div>
     </div>
 </form>
@@ -44,7 +44,7 @@
     <div class="col-sm-6 mb-3 mb-sm-0">
         <div class="card">
             <div class="card-body">
-                <a href="#" class="btn btn-primary">Followers List</a>
+                <a href="#" class="btn btn-primary">My Followers List</a>
                 <div class="" style="padding: 10px;">
                     @foreach (var item in @Model.Follower)
                     {
@@ -60,7 +60,7 @@
     <div class="col-sm-6">
         <div class="card">
             <div class="card-body">
-                <a href="#" class="btn btn-primary">Followee List</a>
+                <a href="#" class="btn btn-primary">My Followee List</a>
                 <div class="" style="padding: 10px;">
                     @foreach (var item in @Model.Followee)
                     {

@@ -42,8 +42,6 @@ public class HomeController : Controller
             data = $"Welcome Back | {lastVisitedDatetime}";
             return View(data);
         }
-
-
     }
 
     public IActionResult Index1()

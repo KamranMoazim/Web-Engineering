@@ -1,0 +1,43 @@
+@model ProjectTweet.Models.TweetModel
+
+@{
+    ViewData["Title"] = "SingleTweet";
+}
+
+<div class="container pt-3">
+
+    <h2 class="text-center"> @Model.Title </h2>
+    <div class="container">
+
+        <div class="card">
+            <div class="card-body">
+                <p style="font-size: medium;">By <a href="#">@Model.User.Username</a> | @Model.CreatedAt.ToString()
+                </p>
+                <p class="card-text" style="font-size: 1.5rem;"> @Model.Content </p>
+                <a href="#" class="btn btn-outline-danger m-1">#@Model.Tags[0]</a>
+                <a href="#" class="btn btn-outline-primary m-1">#@Model.Tags[1]</a>
+                <a href="#" class="btn btn-outline-dark m-1">#@Model.Tags[2]</a>
+            </div>
+        </div>
+
+
+        <div style="margin-top: 20%;">
+            <h5 class="text-center">Tweet Replies...!! </h4>
+                <div class="mb-3 row">
+                    @foreach (var item in Model.Comments)
+                    {
+                        <p>@item.Comment <span class="badge bg-primary">@item.User.Username</span></p>
+                    }
+                </div>
+        </div>
+
+        <form action="/Tweet/CommentTweet" method="post">
+            <div class="mt-3">
+                <textarea class="form-control" placeholder="Enter Your Reply here" rows="3" name="comment"></textarea>
+                <input class="btn btn-primary form-label mt-2" type="submit" value="Post" />
+            </div>
+        </form>
+
+    </div>
+
+</div>

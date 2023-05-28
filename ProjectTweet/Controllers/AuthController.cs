@@ -9,10 +9,10 @@ namespace ProjectTweet.Controllers
     public class AuthController : Controller
     {
         private readonly UserRepsitory userRepsitory;
+        private readonly String cookieName = "userToken";
 
         public AuthController()
         {
-            // Response.Cookies.Append("is_logged_in", false.ToString());
             userRepsitory = new UserRepsitory();
         }
 
@@ -33,12 +33,16 @@ namespace ProjectTweet.Controllers
                 return View();
             }
 
+            HttpContext.Response.Cookies.Append(cookieName, user.UserId.ToString());
+
             return View("MyProfile", userModel);
         }
 
         [HttpGet("Logout")]
         public IActionResult Logout()
         {
+            HttpContext.Response.Cookies.Append(cookieName, (0).ToString());
+
             return View("Login");
         }
 
@@ -59,7 +63,8 @@ namespace ProjectTweet.Controllers
 
             UserModel userModel = userRepsitory.register(user);
 
-            return View("MyProfile", userModel);
+            // return View("MyProfile", userModel);
+            return View("Login");
         }
 
         [HttpPost("RemoveFollow/{userId}/{followedUserId}")]
@@ -95,46 +100,38 @@ namespace ProjectTweet.Controllers
         [HttpGet("MyProfile")]
         public IActionResult MyProfile()
         {
-            UserModel userModel = new UserModel
-            {
-                UserId = 1,
-                Username = "test",
-                FirstName = "test",
-                LastName = "test",
-                Password = "test",
-                Follower = new List<FollowUserModel>(){
-                    new FollowUserModel(){
-                        UserId = 2,
-                        Username = "test2",
-                        FirstName = "test2",
-                    },
-                    new FollowUserModel(){
-                        UserId = 3,
-                        Username = "test3",
-                        FirstName = "test3",
-                    },
-                },
-                Followee = new List<FollowUserModel>(){
-                    new FollowUserModel(){
-                        UserId = 4,
-                        Username = "test4",
-                        FirstName = "test4",
-                    },
-                    new FollowUserModel(){
-                        UserId = 5,
-                        Username = "test5",
-                        FirstName = "test5",
-                    },
-                }
-            };
 
-            return View(userModel);
+            if (HttpContext.Request.Cookies.ContainsKey(cookieName))
+            {
+                string? cookie = HttpContext.Request.Cookies[cookieName];
+
+                UserModel userModel = userRepsitory.getProfile(int.Parse(cookie!));
+
+                if (userModel == null)
+                {
+                    return View("Login");
+                }
+
+                return View(userModel);
+            }
+
+            return View("Login");
         }
 
         [HttpGet("FollowOthers")]
         public IActionResult FollowOthers()
         {
-            List<ProfileModel> profileModels = this.userRepsitory.getProfilesByJoinedDate();
+            List<ProfileModel> profileModels = new List<ProfileModel>(); //  = this.userRepsitory.getProfilesByJoinedDate();
+            profileModels.Add(
+                new ProfileModel
+                {
+                    FirstName = "test",
+                    LastName = "test",
+                    ProfileId = 1,
+                    TagLine = "test",
+                    JoinedDate = DateTime.Now,
+                }
+            );
             return View(profileModels);
         }
 

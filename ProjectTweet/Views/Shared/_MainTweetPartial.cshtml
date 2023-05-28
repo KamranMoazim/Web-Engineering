@@ -1,0 +1,32 @@
+@model ProjectTweet.Models.TweetModel;
+@{
+    ViewData["Title"] = "";
+}
+
+
+<div class="col-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a asp-controller="Tweet" asp-action="SingleTweet">
+                    @Model.Title
+                </a>
+            </h5>
+            <p class="card-text">@Model.Content</p>
+            <p>By <a href="#">@Model.User.Username</a> <br> @Model.CreatedAt.ToString()</p>
+            <a href="#" class="btn btn-outline-danger m-1">#@Model.Tags[0]</a>
+            <a href="#" class="btn btn-outline-primary m-1">#@Model.Tags[1]</a>
+            <a href="#" class="btn btn-outline-dark m-1">#@Model.Tags[2]</a>
+            <div class="flexbuttons">
+                <button class="btn btn-outline-primary m-1"> <i class="fa fa-thumbs-up"></i>
+                    @Model.LikesCount
+                </button>
+                <button class="btn btn-outline-primary m-1"> <i class="fa fa-comment" aria-hidden="true"></i>
+                    @Model.Comments.Count
+                </button>
+                <button class="btn btn-outline-primary m-1"> <i class="fa fa-share" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
