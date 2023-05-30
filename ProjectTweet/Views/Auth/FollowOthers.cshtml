@@ -19,12 +19,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a asp-controller="Tweet" asp-action="SingleTweet">
+                            <a asp-controller="Auth" asp-action="OtherUserDetail" asp-route-id="@item.ProfileId">
                                 @item.FirstName | @item.LastName
                             </a>
                         </h5>
                         <p class="card-text">Bio - @item.TagLine </p>
-                        <form method="post" action="/Auth/FollowOthers/{@item.ProfileId}">
+                        <form method="post" action="/Auth/FollowOthers/@item.ProfileId">
                             <input class="btn btn-outline-primary" type="submit" value="Follow" />
                         </form>
                     </div>

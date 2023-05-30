@@ -1,0 +1,33 @@
+@model ProjectTweet.Models.OtherUserDetail
+
+@{
+    ViewData["Title"] = "OtherUserDetail";
+}
+
+
+<h1 class="text-center">User Details</h1>
+
+<div class="col-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                @Model.Profile.FirstName | @Model.Profile.LastName
+            </h5>
+            <p class="card-text">Bio - @Model.Profile.TagLine </p>
+            <form method="post" action="/Auth/FollowOthers/@Model.Profile.ProfileId">
+                <input class="btn btn-outline-primary" type="submit" value="Follow" />
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<h1 class="text-center">User Tweets</h1>
+<div class="row text-center">
+
+    @foreach (var tweet in @Model.Tweets)
+    {
+        <partial name="_FriendsTweetPartial" model="@tweet" />
+    }
+
+</div>
