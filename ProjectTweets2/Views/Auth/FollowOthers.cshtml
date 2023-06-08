@@ -1,0 +1,40 @@
+@using ProjectTweets2.Models.DB
+@model List<User>
+
+@{
+    ViewData["Title"] = "FollowOthers";
+}
+
+<div class="container pt-3">
+
+    <h2 class="text-center">Follow Others</h2>
+
+    <div class="row text-center">
+
+
+
+        @foreach (var item in @Model)
+        {
+            <div class="col-3 p-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a asp-controller="Auth" asp-action="OtherUserDetail" asp-route-id="@item.UserId">
+                                @item.FirstName | @item.LastName
+                            </a>
+                        </h5>
+                        <p class="card-text">Bio - @item.TagLine </p>
+                        <form method="post" action="/Auth/FollowOthers/@item.UserId/">
+                            <input class="btn btn-outline-primary" type="submit" value="Follow" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+    </div>
+
+</div>
+</div>

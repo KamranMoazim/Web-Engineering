@@ -1,0 +1,38 @@
+﻿@page
+<div class="container">
+
+
+    <div class="row">
+        <div class="text-start">
+            <label>Group-Name</label>
+            <input id="groupInput" type="text" />
+            <br />
+            <input type="button" id="addToGroup" value="AddToGroup" />
+            <input type="button" id="removeFromGroup" value="RemoveFromGroup" />
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-6">
+
+            <br />
+            <br />
+            <label>User-Name</label>
+            <input id="userInput" type="text" />
+            <br />
+            <label>Your-Message</label>
+            <input id="messageInput" type="text" />
+            <br />
+            @* <input type="button" id="sendButton" value="Send Message" /> *@
+            <input type="button" id="sendMessageToGroup" value="SendMessageToGroup" />
+
+            <hr />
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+</div>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/chat.js"></script>

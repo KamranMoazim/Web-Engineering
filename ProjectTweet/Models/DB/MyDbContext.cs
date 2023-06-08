@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using Microsoft.EntityFrameworkCore;
 
 namespace ProjectTweet.Models.DB;
 
 public partial class MyDbContext : DbContext
 {
+    // dotnet ef migrations add Init
+    // dotnet ef database update
+    // dotnet ef migrations remove
+    // dotnet ef database update 0
     public MyDbContext()
     {
     }
@@ -15,26 +18,30 @@ public partial class MyDbContext : DbContext
     {
     }
 
-    public virtual DbSet<TweetUser> TweetUsers { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost,1433; Database=MyDB; User Id=SA; Password=Password_01; TrustServerCertificate=true;");
+    {
+        // optionsBuilder.UseSqlServer("Connection String");
+        optionsBuilder.UseSqlServer("Server=localhost,1433; Database=TestDB; User Id=TestUser; Password=123; TrustServerCertificate=true;");
+        base.OnConfiguring(optionsBuilder);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TweetUser>(entity =>
-        {
-            entity.HasKey(e => e.UserId).HasName("PK__TweetUse__1788CC4CC7EEA689");
-
-            entity.ToTable("TweetUser");
-
-            entity.Property(e => e.Password).HasMaxLength(8);
-            entity.Property(e => e.Username).HasMaxLength(50);
-        });
-
-        OnModelCreatingPartial(modelBuilder);
+        modelBuilder.Entity<TweetUser>()
+            .HasMany(e => e.Followee)
+            .WithMany(e => e.Follower)
+            .UsingEntity<TweetUserSet>(
+                e => e.HasOne<TweetUser>().WithMany().HasForeignKey(e => e.UserId),
+                e => e.HasOne<TweetUser>().WithMany().HasForeignKey(e => e.FollwerId));
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    public virtual DbSet<TweetUser> TweetUsers { get; set; }
+    public virtual DbSet<CommentModel> CommentModel { get; set; }
+    public virtual DbSet<TweetModel> TweetModel { get; set; }
+
+    // public virtual DbSet<TestCalss> TestCalss { get; set; }
+
+
+
+
 }

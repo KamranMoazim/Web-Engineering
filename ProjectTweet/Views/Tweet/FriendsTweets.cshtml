@@ -1,4 +1,4 @@
-@model List<ProjectTweet.Models.TweetModel>
+@model List<ProjectTweet.Models.DB.TweetModel>
 @{
     ViewData["Title"] = "FriendsTweets";
 }
@@ -11,7 +11,7 @@
 
         @foreach (var tweet in @Model)
         {
-            <partial name="_FriendsTweetPartial" model="@tweet" />
+                <partial name="_FriendsTweetPartial" model="@tweet" />
         }
 
 

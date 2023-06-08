@@ -1,0 +1,83 @@
+@using ProjectTweets2.Models.DB
+@model User
+@{
+    ViewData["Title"] = "MyProfile";
+    @* Model.UserId = 1; *@
+}
+
+<div class="container pt-3">
+    <h2 class="text-center">My Profile</h2>
+    Welcome, <h3>Mr. @Model.Username </h3>
+</div>
+
+<form method="post" action="/Auth/MyProfile">
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input readonly type="text" class="form-control" value=@Model.Username>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">FirstName</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="FirstName" value=@Model.FirstName>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">LastName</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="LastName" value=@Model.LastName>
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Tag-Line</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="TagLine" value=@Model.TagLine>
+        </div>
+    </div>
+
+    <div class="row  p-5">
+        <div class="col-12">
+            <input class="btn btn-primary" type="submit" value="Update Profile" />
+        </div>
+    </div>
+</form>
+
+
+<div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="card">
+            <div class="card-body">
+                <a href="#" class="btn btn-primary">My Followees List</a>
+                <div class="" style="padding: 10px;">
+                    @foreach (var item in @Model.Follower)
+                    {
+                        <form method="post" action="/Auth/RemoveFollow/{@item.UserId}/{@Model.UserId}">
+                            <h5 class="card-title"> @item.Username - @item.FirstName</h5>
+                            <input class="btn btn-outline-danger" type="submit" value="Remove" />
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <a href="#" class="btn btn-primary">My Followers List</a>
+                <div class="" style="padding: 10px;">
+                    @foreach (var item in @Model.Followee)
+                    {
+                        <form method="post" action="/Auth/RemoveFollower/@item.UserId">
+                            <h5 class="card-title"> @item.Username - @item.FirstName</h5>
+                            <input class="btn btn-outline-danger" type="submit" value="Remove" />
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,8 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
+
+// to catch response from server
 connection.on("ReceiveMessage", function (message) {
     var li = document.createElement("li");
     document.getElementById("messagesList").appendChild(li);
@@ -22,6 +24,7 @@ connection.start().then(function () {
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     // var message = document.getElementById("messageInput").value;
+    // to invoke server-side message
     connection.invoke("SendMessage", "this is a test message").catch(function (err) {
         return console.error(err.toString());
     });

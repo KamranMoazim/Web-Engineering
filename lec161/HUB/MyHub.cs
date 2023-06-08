@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace lec161.HUB
 {
+
+    // libman install @microsoft/signalr@latest -p unpkg -d wwwroot/js/signalr --files dist/browser/signalr.js --files dist/browser/signalr.min.js
+
     public class MyHub : Hub
     {
         // SignalR - to enable real-time communication b/w client and server
-        // Hub - high level pipeline b/w client and server
+        // Hub - high level pipeline b/w client and server, we define functions which we can use from client side
         // we uses web-sockets
         // if web-sockets are available then use them, 
         //      else use Server-Sent-Events, send information after some time

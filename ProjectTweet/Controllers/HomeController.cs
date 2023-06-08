@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using ProjectTweet.Models;
+using ProjectTweet.Models.DB;
 
 namespace ProjectTweet.Controllers;
 

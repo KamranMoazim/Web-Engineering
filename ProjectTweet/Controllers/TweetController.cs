@@ -1,6 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using ProjectTweet.Models;
+using ProjectTweet.Models.DB;
 
 
 // Follow Other Page
@@ -95,15 +96,15 @@ namespace ProjectTweet.Controllers
                         Id = 1,
                         Comment = "Amazing Tweet, This is the First Comment",
                         PostedDate = DateTime.Now,
-                        User = new UserModel{
-                            UserId = 1,
-                            Username = "johndoe",
-                            FirstName = "Firs",
-                            LastName = "Las",
-                            Password = "XXXXXX",
-                            Followee = new List<FollowUserModel>(),
-                            Follower = new List<FollowUserModel>()
-                        }
+                        // User = new UserModel{
+                        //     UserId = 1,
+                        //     Username = "johndoe",
+                        //     FirstName = "Firs",
+                        //     LastName = "Las",
+                        //     Password = "XXXXXX",
+                        //     Followee = new List<FollowUserModel>(),
+                        //     Follower = new List<FollowUserModel>()
+                        // }
                     }
                 },
                 Tags = new List<String>(new String[] { "Tech", "News", "cSharp" })

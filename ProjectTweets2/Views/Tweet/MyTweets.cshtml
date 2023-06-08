@@ -1,0 +1,20 @@
+@model List<ProjectTweets2.Models.DB.Tweets>
+
+@{
+    ViewData["Title"] = "MyTweets";
+}
+
+<div class="container pt-3">
+
+    <h2 class="text-center">All My Tweets</h2>
+
+    <div class="row text-center">
+
+        @foreach (var tweet in @Model)
+        {
+            <partial name="_MyTweetsPartial" model="@tweet" />
+        }
+
+    </div>
+
+</div>

@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using ProjectTweet.Models.DB;
 
 namespace ProjectTweet.Models
 {

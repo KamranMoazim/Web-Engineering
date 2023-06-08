@@ -10,6 +10,9 @@ namespace ProjectTweet.Models.Repositories
 
         // dotnet ef dbcontext scaffold "Server=localhost,1433; Database=MyDB; User Id=SA; Password=Password_01; TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer --output-dir ./Models/DB -t TweetUser language -f
 
+        // dotnet ef migrations add MigrationNameHere 
+        // dotnet ef database update
+
         private readonly MyDbContext context;
 
         public UserRepsitory()

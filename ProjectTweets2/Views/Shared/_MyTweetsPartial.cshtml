@@ -1,0 +1,22 @@
+@model ProjectTweets2.Models.DB.Tweets;
+@{
+    ViewData["Title"] = "_MyTweetsPartial";
+}
+
+<div class="col-3 p-2">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a asp-controller="Tweet" asp-action="SingleTweet">
+                    @Model.Title
+                </a>
+            </h5>
+            <p class="card-text">@Model.Content</p>
+            <a href="#" class="btn btn-outline-danger m-1">#@Model.Tags.Tag1</a>
+            <a href="#" class="btn btn-outline-primary m-1">#@Model.Tags.Tag2</a>
+            <a href="#" class="btn btn-outline-dark m-1">#@Model.Tags.Tag3</a>
+        </div>
+        <button class="btn btn-outline-danger m-1"><i class="fa fa-trash" aria-hidden="true"></i> Delete
+            Tweet</button>
+    </div>
+</div>

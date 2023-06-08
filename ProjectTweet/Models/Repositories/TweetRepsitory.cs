@@ -1,6 +1,8 @@
 
 using Microsoft.Data.SqlClient;
 
+using ProjectTweet.Models.DB;
+
 namespace ProjectTweet.Models.Repositories
 {
     public class TweetRepsitory
