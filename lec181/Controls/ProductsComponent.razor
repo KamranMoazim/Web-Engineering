@@ -1,0 +1,23 @@
+<div>
+    @* <h1>@Name</h1>
+    <h1>@Price</h1> *@
+
+    <h1>@product.Name</h1>
+    <h1>@product.Price</h1>
+</div>
+
+
+@code {
+
+    @* [Parameter]
+    public string Name { get; set; } = "";
+
+    [Parameter]
+    public int Price { get; set; } = 10; *@
+
+
+
+    [Parameter]
+    public Product product { get; set; }
+
+}

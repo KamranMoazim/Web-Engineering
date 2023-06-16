@@ -36,6 +36,24 @@ namespace ProjectTweets2.Controllers
             return View(ListOfTweets);
         }
 
+        [HttpPost("MyTweets/{tweetId}")]
+        public IActionResult DeleteMyTweet(int tweetId)
+        {
+            if (CheckIfLoggedIn() == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            string? cookie = HttpContext.Request.Cookies[cookieName];
+            int userId = int.Parse(cookie!);
+
+            tweetRepository.DeleteTweet(tweetId);
+
+            var ListOfTweets = tweetRepository.GetAllMyTweets(userId);
+
+            return View("MyTweets", ListOfTweets);
+        }
+
         [HttpGet("SingleTweet/{tweetId}")]
         public IActionResult ViewSingleTweet(int tweetId)
         // int id,
@@ -141,19 +159,68 @@ namespace ProjectTweets2.Controllers
             string? cookie = HttpContext.Request.Cookies[cookieName];
             int userId = int.Parse(cookie!);
 
+            Console.WriteLine(tweetId);
             Console.WriteLine(comment);
 
             tweetRepository.CreateNewComment(comment, tweetId, userId);
 
             Tweets tweetModel = tweetRepository.GetParticularTweet(tweetId);
 
+
             return View("SingleTweet", tweetModel);
+        }
+
+        [HttpPost("SingleTweet/{tweetId}/LikeTweet")]
+        public IActionResult LikeTweet(int tweetId)
+        {
+            if (CheckIfLoggedIn() == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Console.WriteLine(id);
+            string? cookie = HttpContext.Request.Cookies[cookieName];
+            int userId = int.Parse(cookie!);
+
+
+            tweetRepository.LikeTweet(userId, tweetId);
+
+            Tweets tweetModel = tweetRepository.GetParticularTweet(tweetId);
+
+
+            return View("SingleTweet", tweetModel);
+            // return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        [HttpPost("SingleTweet/{tweetId}/ShareTweet")]
+        public IActionResult ShareTweet(int tweetId)
+        {
+            if (CheckIfLoggedIn() == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Console.WriteLine(id);
+            string? cookie = HttpContext.Request.Cookies[cookieName];
+            int userId = int.Parse(cookie!);
+
+
+            tweetRepository.ShareATweet(userId, tweetId);
+
+            Tweets tweetModel = tweetRepository.GetParticularTweet(tweetId);
+
+
+            return View("SingleTweet", tweetModel);
+            // return Redirect(Request.Headers["Referer"].ToString());
         }
 
         [HttpGet("TagTweets/{tag}")]
         public IActionResult TagTweets(string tag)
         {
+            Console.WriteLine("tag : " + tag);
             var ListOfTweets = tweetRepository.GetAllTweetsOfParticularTag(tag);
+
+            Console.WriteLine("ListOfTweets : " + ListOfTweets.Count);
 
             return View(ListOfTweets);
         }

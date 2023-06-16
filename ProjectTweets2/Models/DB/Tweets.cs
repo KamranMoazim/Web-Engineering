@@ -34,5 +34,6 @@ namespace ProjectTweets2.Models.DB
         public List<User> UserLikes { get; set; }
 
         public List<ReTweets> TweetReTweets { get; set; }
+        public List<TweetLikes> TweetLikes { get; set; }
     }
 }

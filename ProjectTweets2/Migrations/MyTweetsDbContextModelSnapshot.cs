@@ -52,6 +52,49 @@ namespace ProjectTweets2.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("ProjectTweets2.Models.DB.GroupName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Groupname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GroupName");
+                });
+
+            modelBuilder.Entity("ProjectTweets2.Models.DB.Messages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("From")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("To")
+                        .HasColumnType("int");
+
+                    b.Property<string>("msg")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("ProjectTweets2.Models.DB.ReTweets", b =>
                 {
                     b.Property<int>("TweetId")
@@ -102,16 +145,18 @@ namespace ProjectTweets2.Migrations
 
             modelBuilder.Entity("ProjectTweets2.Models.DB.TweetLikes", b =>
                 {
-                    b.Property<int>("LikedTweetsTweetId")
+                    b.Property<int>("TweetId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TweetId")
+                    b.Property<int?>("TweetsTweetId")
                         .HasColumnType("int");
 
-                    b.HasKey("LikedTweetsTweetId", "UserId");
+                    b.HasKey("TweetId", "UserId");
+
+                    b.HasIndex("TweetsTweetId");
 
                     b.HasIndex("UserId");
 
@@ -188,11 +233,16 @@ namespace ProjectTweets2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TweetsTweetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("TweetsTweetId");
 
                     b.ToTable("User");
                 });
@@ -249,13 +299,11 @@ namespace ProjectTweets2.Migrations
             modelBuilder.Entity("ProjectTweets2.Models.DB.TweetLikes", b =>
                 {
                     b.HasOne("ProjectTweets2.Models.DB.Tweets", null)
-                        .WithMany()
-                        .HasForeignKey("LikedTweetsTweetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("TweetLikes")
+                        .HasForeignKey("TweetsTweetId");
 
                     b.HasOne("ProjectTweets2.Models.DB.User", null)
-                        .WithMany()
+                        .WithMany("LikedTweets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -278,6 +326,13 @@ namespace ProjectTweets2.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProjectTweets2.Models.DB.User", b =>
+                {
+                    b.HasOne("ProjectTweets2.Models.DB.Tweets", null)
+                        .WithMany("UserLikes")
+                        .HasForeignKey("TweetsTweetId");
+                });
+
             modelBuilder.Entity("ProjectTweets2.Models.DB.UserSet", b =>
                 {
                     b.HasOne("ProjectTweets2.Models.DB.User", null)
@@ -291,12 +346,18 @@ namespace ProjectTweets2.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("TweetLikes");
+
                     b.Navigation("TweetReTweets");
+
+                    b.Navigation("UserLikes");
                 });
 
             modelBuilder.Entity("ProjectTweets2.Models.DB.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("LikedTweets");
 
                     b.Navigation("Tweets");
 

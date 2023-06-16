@@ -48,15 +48,18 @@
 
 
 <div class="row">
+
     <div class="col-sm-6 mb-3 mb-sm-0">
         <div class="card">
             <div class="card-body">
-                <a href="#" class="btn btn-primary">My Followees List</a>
+                <a href="#" class="btn btn-primary">My Followers List</a>
                 <div class="" style="padding: 10px;">
                     @foreach (var item in @Model.Follower)
                     {
-                        <form method="post" action="/Auth/RemoveFollow/{@item.UserId}/{@Model.UserId}">
+                        <a asp-controller="Auth" asp-action="OtherUserDetail" asp-route-id="@item.UserId">
                             <h5 class="card-title"> @item.Username - @item.FirstName</h5>
+                        </a>
+                        <form method="post" action="/Auth/RemoveFollower/@item.UserId">
                             <input class="btn btn-outline-danger" type="submit" value="Remove" />
                         </form>
                     }
@@ -67,12 +70,14 @@
     <div class="col-sm-6">
         <div class="card">
             <div class="card-body">
-                <a href="#" class="btn btn-primary">My Followers List</a>
+                <a href="#" class="btn btn-primary">My Followees List</a>
                 <div class="" style="padding: 10px;">
                     @foreach (var item in @Model.Followee)
                     {
-                        <form method="post" action="/Auth/RemoveFollower/@item.UserId">
+                        <a asp-controller="Auth" asp-action="OtherUserDetail" asp-route-id="@item.UserId">
                             <h5 class="card-title"> @item.Username - @item.FirstName</h5>
+                        </a>
+                        <form method="post" action="/Auth/RemoveFollowee/@item.UserId">
                             <input class="btn btn-outline-danger" type="submit" value="Remove" />
                         </form>
                     }

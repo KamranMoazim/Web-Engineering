@@ -1,5 +1,6 @@
 
 using ProjectTweets2.Models.DB;
+using ProjectTweets2.Models.ViewModel;
 
 namespace ProjectTweets2.Models.Repositories
 {
@@ -16,7 +17,10 @@ namespace ProjectTweets2.Models.Repositories
         public List<Tweets> GetAllTweetsOfParticularTag(string tagTitle)
         {
             // GetAllTweetsOfParticularTag
-            List<Tweets> tweets = _context.Tweets.Where(t => t.Tags.Tag1 == tagTitle || t.Tags.Tag3 == tagTitle || t.Tags.Tag3 == tagTitle).ToList();
+
+            List<int> tags = _context.Tags.Where(t => t.Tag1 == tagTitle || t.Tag2 == tagTitle || t.Tag3 == tagTitle).Select(e => e.TagsId).ToList();
+
+            List<Tweets> tweets = _context.Tweets.Where(t => tags.Contains(t.TagsId)).ToList();
 
             tweets = completeTheTweetsContents(tweets);
 
@@ -66,26 +70,33 @@ namespace ProjectTweets2.Models.Repositories
         }
 
 
-        public List<Tweets> GetSharedTweetsOfMyFriends(int userId)
+        public List<SharedTweetModel> GetSharedTweetsOfMyFriends(int userId)
         {
+            List<SharedTweetModel> sharedTweets = new List<SharedTweetModel>();
+
+
             List<int> myFriends = _context.UserSet.Where(u => u.UserId == userId).Select(u => u.FollwerId).ToList();
 
             List<ReTweets> reTweets = new List<ReTweets>();
-
-            List<Tweets> tweets = new List<Tweets>();
-
-
             _context.ReTweets.OrderByDescending(t => t.PostedAt).Where(t => myFriends.Contains(t.UserId)).ToList().ForEach(t => reTweets.Add(t));
+
+
 
             foreach (var reTweet in reTweets)
             {
-                tweets.Add(_context.Tweets.Where(t => t.TweetId == reTweet.TweetId).FirstOrDefault()!);
+                Tweets tweet = completeTheTweetContents(_context.Tweets.Where(t => t.TweetId == reTweet.TweetId).FirstOrDefault()!);
+                User user = _context.User.Find(reTweet.UserId)!;
+
+                sharedTweets.Add(
+                    new SharedTweetModel
+                    {
+                        Tweet = tweet,
+                        User = user
+                    }
+                );
             }
 
-            tweets = completeTheTweetsContents(tweets);
-
-
-            return tweets;
+            return sharedTweets;
         }
 
 
@@ -107,26 +118,26 @@ namespace ProjectTweets2.Models.Repositories
 
         public bool LikeTweet(int userId, int tweetId)
         {
+            // Console.WriteLine(userId + " " + tweetId);
+
             Tweets tweet = _context.Tweets.Where(t => t.TweetId == tweetId).FirstOrDefault()!;
-            tweet.LikesCount += 1;
-
-            TweetLikes tweetLikes = new TweetLikes();
-            tweetLikes.UserId = userId;
-            tweetLikes.TweetId = tweetId;
-            _context.TweetLikes.Add(tweetLikes);
-
-            _context.SaveChanges();
-
-            return true;
-        }
-
-        public bool RemoveLikeTweet(int userId, int tweetId)
-        {
-            Tweets tweet = _context.Tweets.Where(t => t.TweetId == tweetId).FirstOrDefault()!;
-            tweet.LikesCount -= 1;
 
             TweetLikes tweetLikes = _context.TweetLikes.Where(t => t.UserId == userId && t.TweetId == tweetId).FirstOrDefault()!;
-            _context.TweetLikes.Remove(tweetLikes);
+
+            if (tweetLikes == null)
+            {
+                tweet.LikesCount += 1;
+                TweetLikes tweetLikes2 = new TweetLikes();
+                tweetLikes2.UserId = userId;
+                tweetLikes2.TweetId = tweetId;
+                _context.TweetLikes.Add(tweetLikes2);
+            }
+            else
+            {
+                tweet.LikesCount -= 1;
+                _context.TweetLikes.Remove(tweetLikes);
+            }
+
 
             _context.SaveChanges();
 
@@ -170,22 +181,54 @@ namespace ProjectTweets2.Models.Repositories
         public bool DeleteTweet(int tweetId)
         {
             var tweet = _context.Tweets.Where(t => t.TweetId == tweetId).FirstOrDefault();
+
+            _context.Comments.RemoveRange(_context.Comments.Where(c => c.TweetId == tweetId));
+
+            _context.TweetLikes.RemoveRange(_context.TweetLikes.Where(c => c.TweetId == tweetId));
+
+            _context.ReTweets.RemoveRange(_context.ReTweets.Where(c => c.TweetId == tweetId));
+
+
+
             _context.Tweets.Remove(tweet!);
+
             _context.SaveChanges();
             return true;
         }
 
         public bool ShareATweet(int userId, int tweetId)
         {
-            ReTweets reTweet = new ReTweets();
-            reTweet.UserId = userId;
-            reTweet.TweetId = tweetId;
-            reTweet.PostedAt = DateTime.Now;
-            _context.ReTweets.Add(reTweet);
+            ReTweets? reTweets = _context.ReTweets.Where(t => t.UserId == userId && t.TweetId == tweetId).FirstOrDefault();
 
             Tweets tweet = _context.Tweets.Where(t => t.TweetId == tweetId).First();
-            Console.WriteLine(tweet.TweetId + " " + tweet.Title + " " + tweet.Content + " " + tweet.PostedAt + " " + tweet.UserId + " " + tweet.LikesCount + " " + tweet.RetweetsCount + " " + tweet.CommentsCount);
-            tweet.RetweetsCount += 1;
+
+
+            if (reTweets == null)
+            {
+                tweet.RetweetsCount += 1;
+
+                ReTweets reTweet = new ReTweets();
+                reTweet.UserId = userId;
+                reTweet.TweetId = tweetId;
+                reTweet.PostedAt = DateTime.Now;
+
+                _context.ReTweets.Add(reTweet);
+
+            }
+            else
+            {
+                tweet.RetweetsCount -= 1;
+
+                _context.ReTweets.Remove(reTweets);
+            }
+
+            _context.SaveChanges();
+
+            return true;
+
+
+
+
 
 
             _context.SaveChanges();

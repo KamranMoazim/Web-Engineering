@@ -1,0 +1,15 @@
+<h1>
+    From GreatGrandChild - @Name - @Price - @Name1
+</h1>
+
+
+@code {
+    [CascadingParameter(Name = "Name")]
+    public string? Name { get; set; }
+
+    [CascadingParameter(Name = "Price")]
+    public int Price { get; set; }
+
+    [CascadingParameter(Name = "Name1")]
+    public string? Name1 { get; set; }
+}

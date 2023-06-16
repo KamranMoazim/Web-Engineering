@@ -1,0 +1,17 @@
+@* @model ProjectTweets2.Views.Shared.Components.TagsComponent.TagsComponent *@
+@model ProjectTweets2.Models.DB.Tags
+@{
+    @* ViewData["Title"] = "TagsComponent"; *@
+}
+
+<a class="btn btn-outline-danger m-1" asp-controller="Tweet" asp-action="TagTweets" asp-route-id=@Model.Tag1>
+    #@Model.Tag1
+</a>
+
+<a class="btn btn-outline-primary m-1" asp-controller="Tweet" asp-action="TagTweets" asp-route-id=@Model.Tag2>
+    #@Model.Tag2
+</a>
+
+<a class="btn btn-outline-dark m-1" asp-controller="Tweet" asp-action="TagTweets" asp-route-id=@Model.Tag3>
+    #@Model.Tag3
+</a>

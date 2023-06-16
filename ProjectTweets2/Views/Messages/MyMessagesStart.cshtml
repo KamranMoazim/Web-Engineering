@@ -1,0 +1,138 @@
+@model ProjectTweets2.Models.ViewModel.MessagesModel
+
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<style>
+    .message-sender {
+        background-color: #337ab7;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .message-receiver {
+        background-color: #f1f1f1;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .message-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .message-username {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .message-time {
+        font-size: 12px;
+        color: #ccc;
+    }
+
+    .message-content {
+        margin-bottom: 0;
+    }
+</style>
+@* show all users in left pan and when click on particular user , show details on right hand side *@
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+
+            @foreach (var item in Model.MyFriends)
+            {
+                @if (item.UserId == Model.CurrentFriend.UserId)
+                {
+                    <a asp-controller="Messages" asp-action="MyFriendsMessages" asp-route-id="@item.UserId"
+                        class="list-group-item list-group-item-action active" id="receiverId">@item.UserId - @item.Username</a>
+                }
+                else
+                {
+                    <a asp-controller="Messages" asp-action="MyFriendsMessages" asp-route-id="@item.UserId"
+                        class="list-group-item list-group-item-action">@item.Username</a>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Messages</h3>
+            </div>
+
+            <div class="container m-2">
+                <div class="row" id="MyId">
+                    @foreach (var chatMessage in Model.MessagesWithCurrentFriend)
+                    {
+
+                        @if (chatMessage.IsSender)
+                        {
+                            <div class="col-md-6 offset-md-6">
+                                <div class="message-sender">
+                                    <div class="message-header">
+                                        <h5 class="message-username">@chatMessage.User.Username</h5>
+                                        <span class="message-time">@chatMessage.Time.ToString()</span>
+                                    </div>
+                                    <p class="message-content">@chatMessage.Message</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-6">
+                                <div class="message-receiver">
+                                    <div class="message-header">
+                                        <h5 class="message-username">@chatMessage.User.Username</h5>
+                                        <span class="message-time">@chatMessage.Time.ToString()</span>
+                                    </div>
+                                    <p class="message-content">@chatMessage.Message</p>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                </div>
+            </div>
+
+            @if (Model.MyFriends.Count == 0)
+            {
+                <p class="btn btn-primary">
+                    You have No Friends mean Follwers ;) to CHAT with :(
+                </p>
+            }
+            else
+            {
+                <div class="m-2">
+                    <input type="button" id="startChat" class="btn btn-primary" value="Start Chat" />
+                    <input type="button" id="endChat" class="btn btn-danger" value="End Chat" />
+                </div>
+
+                <div class="card-footer">
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <input type="text" name="message" id="messageInput" placeholder="Type Message ..."
+                                class="form-control">
+                            <span class="input-group-append">
+                                <input type="button" id="sendMessage" class="btn btn-primary" value="Send" />
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/chat.js"></script>

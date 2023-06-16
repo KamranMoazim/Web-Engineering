@@ -1,0 +1,17 @@
+@page "/courses"
+
+
+<div>
+    @foreach (var cou in MyCourses)
+    {
+        <CourseComp MyCourse="@cou" />
+    }
+</div>
+
+
+@code {
+    public List<Course> MyCourses { get; set; } = new List<Course>(){
+new Course{ID=1, Name="C1"},
+new Course{ID=2, Name="C2"},
+};
+}

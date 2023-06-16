@@ -13,20 +13,49 @@
                 </a>
             </h5>
             <p class="card-text">@Model.Content</p>
-            <p>By <a href="#">@Model.User.Username</a> <br> @Model.PostedAt.ToString()</p>
-            <a href="#" class="btn btn-outline-danger m-1">#@Model.Tags.Tag1</a>
-            <a href="#" class="btn btn-outline-primary m-1">#@Model.Tags.Tag2</a>
-            <a href="#" class="btn btn-outline-dark m-1">#@Model.Tags.Tag3</a>
+            <p>By
+                <a asp-controller="Auth" asp-action="OtherUserDetail" asp-route-id="@Model.UserId">
+                    @Model.User.Username
+                </a>
+                <br> @Model.PostedAt.ToString()
+            </p>
+
+
+            @* <partial name="_TagsPartial" model="@Model.Tags" /> *@
+            @* <a class="btn btn-outline-danger m-1" asp-controller="Tweet" asp-action="TagTweets"
+            asp-route-id=@Model.Tags.Tag1>
+            #@Model.Tags.Tag1
+            </a>
+
+            <a class="btn btn-outline-primary m-1" asp-controller="Tweet" asp-action="TagTweets"
+            asp-route-id=@Model.Tags.Tag2>
+            #@Model.Tags.Tag2
+            </a>
+
+            <a class="btn btn-outline-dark m-1" asp-controller="Tweet" asp-action="TagTweets"
+            asp-route-id=@Model.Tags.Tag3>
+            #@Model.Tags.Tag3
+            </a> *@
+
+            @(await Component.InvokeAsync("TagsComponent", new { tags = Model.Tags }))
+
             <div class="flexbuttons">
-                <button class="btn btn-outline-primary m-1"> <i class="fa fa-thumbs-up"></i>
+                @* <a asp-controller="Tweet" asp-action="SingleTweet" asp-route-id="@Model.TweetId"> *@
+                <button class="btn btn-outline-primary m-1" type="submit"> <i class="fa fa-thumbs-up"></i>
                     @Model.LikesCount
                 </button>
-                <button class="btn btn-outline-primary m-1"> <i class="fa fa-comment" aria-hidden="true"></i>
-                    @Model.Comments.Count
+                @* <form action="/SingleTweet/@Model.TweetId/LikeTweet" method="post">
+                </form> *@
+                <button class="btn btn-outline-primary m-1">
+                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    @Model.CommentsCount
                 </button>
                 <button class="btn btn-outline-primary m-1"> <i class="fa fa-share" aria-hidden="true"></i>
+                    @Model.RetweetsCount
                 </button>
+                @* </a> *@
             </div>
+
         </div>
     </div>
 </div>

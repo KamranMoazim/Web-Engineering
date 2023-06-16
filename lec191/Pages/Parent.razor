@@ -1,0 +1,27 @@
+@page "/parent"
+
+
+<div>
+
+    <h1>Parent</h1>
+
+    @* <Child Name="C2"></Child> *@
+
+    <CascadingValue Name="Name" Value="@SomeData">
+        <CascadingValue Name="Price" Value="@SomePrice">
+            <CascadingValue Name="Name1" Value="@SomeData1">
+                <Child Name="toChild"></Child>
+            </CascadingValue>
+        </CascadingValue>
+    </CascadingValue>
+
+</div>
+
+@code {
+    public string SomeData { get; set; } = "somedata";
+    public int SomePrice { get; set; } = 15;
+    public string SomeData1 { get; set; } = "somedata2";
+
+    @* public Student student { get; set; } *@
+
+}

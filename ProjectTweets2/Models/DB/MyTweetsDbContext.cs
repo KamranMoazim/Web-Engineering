@@ -32,6 +32,8 @@ namespace ProjectTweets2.Models.DB
         public DbSet<TweetLikes> TweetLikes { get; set; }
         public DbSet<ReTweets> ReTweets { get; set; }
         public DbSet<UserSet> UserSet { get; set; }
+        public DbSet<Messages> Messages { get; set; }
+        public DbSet<GroupName> GroupName { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,10 +61,13 @@ namespace ProjectTweets2.Models.DB
 
 
 
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.LikedTweets)
-                .WithMany(e => e.UserLikes)
-                .UsingEntity<TweetLikes>();
+            // modelBuilder.Entity<User>()
+            //     .HasMany(e => e.LikedTweets)
+            //     .WithMany(e => e.UserLikes)
+            //     .UsingEntity<TweetLikes>();
+            modelBuilder.Entity<TweetLikes>()
+                .HasKey(sc => new { sc.TweetId, sc.UserId });
+            // .OnDelete(DeleteBehavior.Cascade);
 
             // modelBuilder.Entity<User>()
             //     .HasMany(e => e.UserReTweets)
@@ -91,19 +96,6 @@ namespace ProjectTweets2.Models.DB
 
 
 
-
-            // modelBuilder.Entity<TweetLikes>()
-            //     .HasKey(sc => new { sc.TweetId, sc.UserId });
-
-            // modelBuilder.Entity<ReTweets>()
-            //     .HasKey(sc => new { sc.TweetId, sc.UserId });
-
-            // modelBuilder.Entity<User>()
-            //     .HasMany(e => e.Followee)
-            //     .WithMany(e => e.Follower)
-            //     .UsingEntity<UserSet>(
-            //         e => e.HasOne<User>().WithMany().HasForeignKey(e => e.UserId),
-            //         e => e.HasOne<User>().WithMany().HasForeignKey(e => e.FollwerId));
         }
     }
 }

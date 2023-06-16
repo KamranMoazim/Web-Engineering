@@ -1,0 +1,11 @@
+<div>
+    <h1>
+        @MyCourse.ID
+        @MyCourse.Name
+    </h1>
+</div>
+
+@code {
+    [Parameter]
+    public Course MyCourse { get; set; }
+}

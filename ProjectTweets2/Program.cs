@@ -1,7 +1,13 @@
+using ProjectTweets2.MyHub;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddSignalR(); // out signalR has added as service
+
 
 builder.Services.AddDistributedMemoryCache(); // when we use use session, it should be saved in Memory
 builder.Services.AddSession(); // this line will add session
@@ -26,6 +32,11 @@ app.UseSession(); // it will must add after UseRouting() and before MapControlle
 
 app.UseAuthorization();
 
+
+app.MapHub<MyHub>("/chatHub"); // we will access with chatHub at client side
+
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -35,6 +46,7 @@ app.Run();
 
 
 
+// kamran@kamran.com
 
 // using ProjectTweets2.Models.DB;
 // using ProjectTweets2.Models.Repositories;
@@ -100,73 +112,3 @@ app.Run();
 
 
 
-
-
-// tweetRepository.CreateNewTweet(
-//     new Tweets
-//     {
-//         UserId = 1,
-//         CommentsCount = 0,
-//         LikesCount = 0,
-//         RetweetsCount = 0,
-//         Content = "test tweet 1 by user 1",
-//         PostedAt = DateTime.Now,
-//         Title = "test tweet 1 by user 1",
-//         Tags = new Tags
-//         {
-//             Tag1 = "c++",
-//             Tag2 = "c",
-//             Tag3 = "java",
-//         }
-//     }
-// );
-
-// tweetRepository.CreateNewTweet(
-//     new Tweets
-//     {
-//         UserId = 2,
-//         CommentsCount = 0,
-//         LikesCount = 0,
-//         RetweetsCount = 0,
-//         Content = "test tweet 1 by user 2",
-//         PostedAt = DateTime.Now,
-//         Title = "test tweet 1 by user 2",
-//         Tags = new Tags
-//         {
-//             Tag1 = "js",
-//             Tag2 = "ts",
-//             Tag3 = "node",
-//         }
-//     }
-// );
-
-// tweetRepository.CreateNewTweet(
-//     new Tweets
-//     {
-//         UserId = 3,
-//         CommentsCount = 0,
-//         LikesCount = 0,
-//         RetweetsCount = 0,
-//         Content = "test tweet 1 by user 3",
-//         PostedAt = DateTime.Now,
-//         Title = "test tweet 1 by user 3",
-//         Tags = new Tags
-//         {
-//             Tag1 = "cSharp",
-//             Tag2 = "dotnet",
-//             Tag3 = "aspnet",
-//         }
-//     }
-// );
-
-// tweetRepository.ShareATweet(2, 2);
-
-// tweetRepository.GetAllMyTweets(1).ForEach(x => Console.WriteLine(x.UserId + " " + x.Title + " " + x.Content + " " + x.PostedAt + " " + x.Tags.Tag1 + " " + x.Tags.Tag2 + " " + x.Tags.Tag3));
-
-// tweetRepository.GetTweetsOfMyFriends(1).ForEach(x => Console.WriteLine(x.UserId + " " + x.Title + " " + x.Content + " " + x.PostedAt + " " + x.Tags.Tag1 + " " + x.Tags.Tag2 + " " + x.Tags.Tag3));
-
-// tweetRepository.GetSharedTweetsOfMyFriends(1).ForEach(x => Console.WriteLine(x.UserId + " " + x.Title + " " + x.Content + " " + x.PostedAt + " " + x.Tags.Tag1 + " " + x.Tags.Tag2 + " " + x.Tags.Tag3));
-
-// userRepsitory.removeFollower(1, 2);
-
-// Console.WriteLine("Hello World!");

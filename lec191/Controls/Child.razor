@@ -1,0 +1,19 @@
+<h1>
+    From CHILD - @Name
+</h1>
+<h1 style="background-color: rgb(62, 135, 199);">
+    <GrandChild></GrandChild>
+</h1>
+
+<h1 style="background-color: rgb(199, 89, 62);">
+    <GreateGrandChild></GreateGrandChild>
+</h1>
+
+
+@code {
+    [Parameter]
+    public string? Name { get; set; }
+
+    @* [Parameter]
+public string? Price { get; set; } *@
+}

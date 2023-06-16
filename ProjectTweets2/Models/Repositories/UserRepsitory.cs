@@ -29,6 +29,7 @@ namespace ProjectTweets2.Models.Repositories
                     Password = tweetUser.Password,
                     FirstName = tweetUser.FirstName,
                     LastName = tweetUser.LastName,
+                    TagLine = tweetUser.TagLine,
                     Follower = _context.User.Where(x => follwerUserSets.Contains(x.UserId)).ToList(),
                     Followee = _context.User.Where(x => follweeUserSets.Contains(x.UserId)).ToList(),
                 };
@@ -94,7 +95,9 @@ namespace ProjectTweets2.Models.Repositories
 
             // Console.WriteLine("user.UserId --- " + user.UserId);
             // Console.WriteLine("user.FirstName --- " + user.FirstName);
-            // Console.WriteLine("user.LastName --- " + user.LastName);
+            Console.WriteLine("user.TagLine --- " + user.TagLine);
+
+
 
             if (tweetUser != null)
             {
@@ -138,7 +141,7 @@ namespace ProjectTweets2.Models.Repositories
 
         public bool removeFollower(int UserId, int FollowedUserId)
         {
-            UserSet? userSet = _context.UserSet.Where(x => x.UserId == UserId && x.FollwerId == FollowedUserId).FirstOrDefault();
+            UserSet? userSet = _context.UserSet.Where(x => x.UserId == FollowedUserId && x.FollwerId == UserId).FirstOrDefault();
 
             if (userSet != null)
             {
@@ -151,7 +154,7 @@ namespace ProjectTweets2.Models.Repositories
 
         public bool removeFollowee(int UserId, int FollowedUserId)
         {
-            UserSet? userSet = _context.UserSet.Where(x => x.UserId == FollowedUserId && x.FollwerId == UserId).FirstOrDefault();
+            UserSet? userSet = _context.UserSet.Where(x => x.UserId == UserId && x.FollwerId == FollowedUserId).FirstOrDefault();
 
             if (userSet != null)
             {
@@ -161,6 +164,10 @@ namespace ProjectTweets2.Models.Repositories
 
             return true;
         }
+
+
+
+
 
 
 
@@ -196,6 +203,7 @@ namespace ProjectTweets2.Models.Repositories
             dbUser.Password = tweetUser.Password;
             dbUser.FirstName = tweetUser.FirstName;
             dbUser.LastName = tweetUser.LastName;
+            dbUser.TagLine = tweetUser.TagLine;
             dbUser.Follower = _context.User.Where(x => follwerUserSets.Contains(x.UserId)).ToList();
             dbUser.Followee = _context.User.Where(x => follweeUserSets.Contains(x.UserId)).ToList();
             dbUser.Tweets = _context.Tweets.Where(x => x.UserId == userId).ToList();

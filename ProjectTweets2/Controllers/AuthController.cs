@@ -107,11 +107,13 @@ namespace ProjectTweets2.Controllers
         }
 
 
-        [HttpPost("RemoveFollowee/{userId}/{followedUserId}")]
-        public IActionResult RemoveFollowee(int userId, int followedUserId)
+        [HttpPost("RemoveFollowee/{followedUserId}")]
+        public IActionResult RemoveFollowee(int followedUserId)
         {
 
-            if (CheckIfLoggedIn() == 0)
+            int userId = CheckIfLoggedIn();
+
+            if (userId == 0)
             {
                 return RedirectToAction("Login", "Auth");
             }
@@ -123,7 +125,7 @@ namespace ProjectTweets2.Controllers
                 return View();
             }
 
-            return Redirect("MyProfile");
+            return RedirectToAction("MyProfile", "Auth");
         }
 
 

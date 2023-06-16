@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,14 +31,22 @@ namespace ProjectTweets2.Models.DB
 
 
 
-        public List<Tweets> LikedTweets { get; set; }
 
         public List<ReTweets> UserReTweets { get; set; }
+        public List<TweetLikes> LikedTweets { get; set; }
 
 
 
         public List<User> Follower { get; set; }
         public List<User> Followee { get; set; }
+
+
+        // [ForeignKey("ToUserId")]
+        // public List<Messages> SentMessages { get; set; }
+        // public List<Messages> ReceivedMessages { get; set; }
+
+
+        // [ForeignKey("FromUserId")]
 
     }
 }
