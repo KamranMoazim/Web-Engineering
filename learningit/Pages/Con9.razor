@@ -1,0 +1,19 @@
+@page "/pc9"
+
+<h1>Parent Component - Counter:@ParentNumber</h1>
+
+@* <input type="number" @bind="@ParentNumber" @bind:event="oninput" /> *@
+<button class="btn btn-primary" @onclick="IncrementNumber">Update Value From Parent</button>
+
+<PCom9 @bind-ParentNumber="@ParentNumber" @bind-ParentNumber:event="ParentNumberChangedDifferentName" />
+
+@code {
+
+    public int ParentNumber { get; set; } = 0;
+
+
+    public void IncrementNumber()
+    {
+        ParentNumber++;
+    }
+}

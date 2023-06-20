@@ -1,0 +1,60 @@
+@* @page "/pc/{Title}" *@
+@page "/pc/{Title}/{Id:int}"
+
+<h1>Parent Component with Title - @Title - @Id</h1>
+<div>
+    <h3>Current Student : </h3>
+    @if (errorMessage == "")
+    {
+        <CascadingValue Value="cS">
+            <PCom2 MyStudent="cS" />
+        </CascadingValue>
+    }
+</div>
+
+@if (errorMessage != "")
+{
+    <div class="alert alert-danger">
+    @errorMessage
+</div>
+}
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+
+    public string errorMessage { get; set; } = "";
+
+
+    public Student cS { get; set; }
+
+    public List<Student> MyStudents { get; set; } = new List<Student>{
+new Student{Id=1,Name="St1"},
+new Student{Id=2,Name="St2"},
+new Student{Id=3,Name="St3"}
+};
+
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Parent Component Initialized");
+
+        base.OnInitialized();
+
+
+
+        cS = MyStudents.Where(s => s.Id == Id).FirstOrDefault();
+
+        if (cS == null)
+        {
+            errorMessage = "Student Not Found";
+        }
+
+        Title = Title ?? "Default Title";
+        @* Id = Id ?? 1; *@
+    }
+}

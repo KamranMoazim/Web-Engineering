@@ -1,0 +1,54 @@
+@page "/pc5"
+
+<h1>Parent Component</h1>
+
+<PCom7 Items="students" Heading="Students">
+    <TableHeader>
+        <th>ID</th>
+        <th>Student Name</th>
+    </TableHeader>
+    <RowTemplate Context="student">
+        <td>@student.Id</td>
+        <td>@student.Name</td>
+    </RowTemplate>
+</PCom7>
+
+
+
+
+
+<PCom7 Items="pets" Heading="Pets">
+    <TableHeader>
+        <th>ID</th>
+        <th>Pet Name</th>
+    </TableHeader>
+    <RowTemplate Context="pet">
+        <td>@pet.Id</td>
+        <td>@pet.Name</td>
+    </RowTemplate>
+</PCom7>
+
+
+
+@code {
+
+    List<Student> students = new List<Student>(){
+new Student(){Id=1,Name="AStudent"},
+new Student(){Id=2,Name="BStudent"},
+new Student(){Id=3,Name="CStudent"},
+};
+
+    List<Pet> pets = new List<Pet>(){
+new Pet(){Id=1,Name="Cat"},
+new Pet(){Id=2,Name="Dog"},
+new Pet(){Id=3,Name="Dove"},
+};
+
+
+    private class Pet
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+}

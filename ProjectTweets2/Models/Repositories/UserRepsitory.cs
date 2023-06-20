@@ -19,8 +19,8 @@ namespace ProjectTweets2.Models.Repositories
 
             if (tweetUser != null)
             {
-                List<int> follwerUserSets = _context.UserSet.Where(x => x.FollwerId == userId).Select(e => e.UserId).ToList();
-                List<int> follweeUserSets = _context.UserSet.Where(x => x.UserId == userId).Select(e => e.FollwerId).ToList();
+                List<int> follwerUserSets = _context.UserSet.Where(x => x.FollwerId == userId && x.IsActive).Select(e => e.UserId).ToList();
+                List<int> follweeUserSets = _context.UserSet.Where(x => x.UserId == userId && x.IsActive).Select(e => e.FollwerId).ToList();
 
                 User userModel = new User
                 {
@@ -114,7 +114,7 @@ namespace ProjectTweets2.Models.Repositories
 
         public List<User> getProfilesByJoinedDate(int userId)
         {
-            List<int> follwerUserSets = _context.UserSet.Where(x => x.UserId == userId).Select(e => e.FollwerId).ToList();
+            List<int> follwerUserSets = _context.UserSet.Where(x => x.UserId == userId && x.IsActive).Select(e => e.FollwerId).ToList();
 
             List<User> users = new List<User>();
 
@@ -132,8 +132,19 @@ namespace ProjectTweets2.Models.Repositories
 
         public bool makeFollower(int UserId, int FollowedUserId)
         {
-            _context.UserSet.Add(new UserSet { UserId = UserId, FollwerId = FollowedUserId });
-            _context.SaveChanges();
+            UserSet? userSet = _context.UserSet.Where(x => x.UserId == UserId && x.FollwerId == FollowedUserId).FirstOrDefault();
+
+            if (userSet != null)
+            {
+                // _context.UserSet.Remove(userSet);
+                userSet.IsActive = true;
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.UserSet.Add(new UserSet { UserId = UserId, FollwerId = FollowedUserId });
+                _context.SaveChanges();
+            }
 
             return true;
         }
@@ -145,7 +156,8 @@ namespace ProjectTweets2.Models.Repositories
 
             if (userSet != null)
             {
-                _context.UserSet.Remove(userSet);
+                // _context.UserSet.Remove(userSet);
+                userSet.IsActive = false;
                 _context.SaveChanges();
             }
 
@@ -158,7 +170,8 @@ namespace ProjectTweets2.Models.Repositories
 
             if (userSet != null)
             {
-                _context.UserSet.Remove(userSet);
+                // _context.UserSet.Remove(userSet);
+                userSet.IsActive = false;
                 _context.SaveChanges();
             }
 

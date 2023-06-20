@@ -1,0 +1,21 @@
+@page "/pc2"
+
+<h1>Parent Component</h1>
+<p>@MyPMessage</p>
+
+<button @onclick="ClickedFunc">ClickMe</button>
+<PCom4 @ref="pCom4"></PCom4>
+
+@code {
+
+    public string MyPMessage { get; set; } = "Hello from Parent";
+
+    private PCom4 pCom4;
+
+    private void ClickedFunc()
+    {
+        Console.WriteLine("Clicked");
+        pCom4.SetMessage(MyPMessage);
+    }
+
+}

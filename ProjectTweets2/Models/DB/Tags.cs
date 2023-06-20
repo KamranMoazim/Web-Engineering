@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using ProjectTweets2.Models.GeneralModels;
 
 namespace ProjectTweets2.Models.DB
 {
-    public class Tags
+    public class Tags : Audit
     {
         [Key]
         public int TagsId { get; set; }

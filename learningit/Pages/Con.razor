@@ -1,0 +1,20 @@
+@page "/pc"
+
+<h1>Parent Component</h1>
+<div>
+    @foreach (var st in MyStudents)
+    {
+        <a href="/pc/testing/@st.Id">
+            <PCom1 MyStudent="st" />
+        </a>
+    }
+</div>
+
+
+@code {
+    public List<Student> MyStudents { get; set; } = new List<Student>{
+new Student{Id=1,Name="St1"},
+new Student{Id=2,Name="St2"},
+new Student{Id=3,Name="St3"}
+};
+}

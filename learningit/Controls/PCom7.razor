@@ -1,0 +1,38 @@
+@typeparam TItem
+
+<h3>Child Table Template - @Heading</h3>
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>@TableHeader</tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                if (RowTemplate is not null)
+                {
+                    <tr>@RowTemplate(item)</tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Heading { get; set; }
+
+    [Parameter]
+    public RenderFragment TableHeader { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> RowTemplate { get; set; }
+
+    [Parameter, AllowNull]
+    public IReadOnlyList<TItem> Items { get; set; }
+
+
+}

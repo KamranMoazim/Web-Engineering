@@ -1,0 +1,35 @@
+<h2>Child</h2>
+
+<h3>@Message</h3>
+
+@* <button @onclick="@updateMessage">Click Me For Child</button> *@
+<button @onclick="@funcToCallParentFunc">Click Me For Parent</button>
+
+@code {
+
+    [Parameter]
+    public string Message { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> MyCallback { get; set; }
+
+    @* used to call Parent Component Method from Child Component *@
+
+    public void funcToCallParentFunc()
+    {
+        MyCallback.InvokeAsync("Hi From Child");
+    }
+
+    @* public void updateMessage()
+{
+if (Message != "")
+{
+Message = "";
+}
+else
+{
+Message = "Message Added From Child";
+}
+} *@
+
+}

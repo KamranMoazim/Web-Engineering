@@ -1,0 +1,26 @@
+<p>
+    Child
+</p>
+<h1>- @MyStudent.Id - @MyStudent.Name</h1>
+
+<button @onclick="ChangeStudent">ClickMe</button>
+
+@code {
+
+    public Student MyStudent { get; set; }
+
+    [Parameter]
+    public EventCallback<Student> OnStudentChanged { get; set; }
+
+    private void ChangeStudent()
+    {
+        MyStudent = new Student { Id = 2, Name = "Student 2" };
+        OnStudentChanged.InvokeAsync(MyStudent); // sending the new student to the parent
+    }
+
+    protected override void OnInitialized()
+    {
+        MyStudent = new Student { Id = 1, Name = "Default Student in Child" };
+    }
+
+}

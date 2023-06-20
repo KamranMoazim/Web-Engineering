@@ -1,0 +1,68 @@
+@page "/pc11"
+
+<h1>Parent Component</h1>
+
+<button @onclick="clickMethod">Click</button>
+
+<PCom11 Number="@Number" />
+
+@code {
+
+    public int Number { get; set; }
+
+    public void clickMethod()
+    {
+        Console.WriteLine("------- parent - clickMethod");
+        Number++;
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("parent - SetParametersAsync");
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("parent - OnInitialized");
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("parent - OnInitializedAsync");
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("parent - OnParametersSet");
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("parent - OnParametersSetAsync");
+        await base.OnParametersSetAsync();
+    }
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("parent - ShouldRender");
+        return base.ShouldRender();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("parent - OnAfterRender");
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine("parent - OnAfterRenderAsync");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+}

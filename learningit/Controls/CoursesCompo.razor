@@ -1,0 +1,45 @@
+<div>
+    <p>GrandChild Component</p>
+
+    <p>Current Courses:</p>
+    <ul>
+        @foreach (var course in CurrentCourses)
+        {
+            <li>@course.Name</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Student? MyStudent { get; set; } = new Student();
+
+    public List<Course> AllCourses { get; set; } = new List<Course>();
+    public List<Course> CurrentCourses { get; set; } = new List<Course>();
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("GrandChildComponent.OnParametersSet");
+
+        AllCourses = new List<Course>()
+{
+new Course() { Id = 1, Name = "C# Fundamentals", StudentId = 1 },
+new Course() { Id = 2, Name = "C# Advanced", StudentId = 1 },
+new Course() { Id = 3, Name = "C# Masterclass", StudentId = 1 },
+
+new Course() { Id = 4, Name = "Java Fundamentals", StudentId = 2 },
+new Course() { Id = 5, Name = "Java Advanced", StudentId = 2 },
+new Course() { Id = 6, Name = "Java Masterclass", StudentId = 2 },
+
+new Course() { Id = 7, Name = "Python Fundamentals", StudentId = 3 },
+new Course() { Id = 8, Name = "Python Advanced", StudentId = 3 },
+new Course() { Id = 9, Name = "Python Masterclass", StudentId = 3 },
+
+new Course() { Id = 10, Name = "JavaScript Fundamentals", StudentId = 4 },
+new Course() { Id = 11, Name = "JavaScript Advanced", StudentId = 4 },
+new Course() { Id = 12, Name = "JavaScript Masterclass", StudentId = 4 },
+};
+
+        CurrentCourses = AllCourses.Where(c => c.StudentId == MyStudent.Id).ToList();
+    }
+}

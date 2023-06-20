@@ -1,0 +1,19 @@
+﻿@page "/MyPage/{Title}/{Id}/{abc:int}"
+@page "/MyPage"
+@* RouteParameter *@
+@* to pass information from one page component to other page component *@
+
+
+<h1>@Title - @Id - @abc</h1>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; } = "Default Value";
+
+    [Parameter]
+    public string? Id { get; set; } = "Default Value";
+
+    [Parameter]
+    public int abc { get; set; } = 0;
+
+}

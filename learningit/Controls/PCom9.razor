@@ -1,0 +1,21 @@
+<h3>Child</h3>
+
+<p>ParentNumber: @ParentNumber</p>
+
+<button class="btn btn-primary" @onclick="IncrementNumber">Update Value From Child</button>
+
+@code {
+
+    [Parameter]
+    public int ParentNumber { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ParentNumberChangedDifferentName { get; set; }
+
+    public void IncrementNumber()
+    {
+        ParentNumber++;
+        ParentNumberChangedDifferentName.InvokeAsync(ParentNumber);
+    }
+
+}

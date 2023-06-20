@@ -1,0 +1,35 @@
+@page "/pc10/{Title?}"
+
+<h1>@Title</h1>
+<div class="alert-info">@Message</div>
+
+@code {
+
+    [Parameter]
+    public string? Title { get; set; }
+    public string? Message { get; set; }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        if (parameters.TryGetValue<string>(nameof(Title), out var val))
+        {
+            if (val is null)
+            {
+                Title = "Default Title";
+                Message = "Title was not set";
+            }
+            else if (val.Equals("reset"))
+            {
+                Title = "Default Title";
+                Message = "Title was not set";
+            }
+            else
+            {
+                Title = val;
+                Message = "Title was set to : " + val;
+            }
+        }
+
+        await base.SetParametersAsync(parameters);
+    }
+}

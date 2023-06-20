@@ -1,10 +1,10 @@
 
 
-using System.ComponentModel.DataAnnotations.Schema;
+using ProjectTweets2.Models.GeneralModels;
 
 namespace ProjectTweets2.Models.DB
 {
-    public class Messages
+    public class Messages : Audit
     {
         public int Id { get; set; }
         public DateTime Time { get; set; }

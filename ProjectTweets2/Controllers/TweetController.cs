@@ -80,7 +80,7 @@ namespace ProjectTweets2.Controllers
         }
 
         [HttpPost("CreateTweet")]
-        public IActionResult CreateTweet(string title, string tags, string detail)
+        public IActionResult CreateTweet(string title, string tags, string detail, IFormFile file)
         {
             if (CheckIfLoggedIn() == 0)
             {
@@ -95,10 +95,35 @@ namespace ProjectTweets2.Controllers
             int userId = int.Parse(cookie!);
             var newTags = tags.Split(",");
 
+            string filePath = "";
+            string fileName = "";
+
+
+
+            if (file != null && file.Length > 0)
+            {
+                Console.WriteLine("file.Length : " + file.Length);
+                fileName = Path.GetFileName(file.FileName);
+                filePath = Path.Combine(Directory.GetCurrentDirectory() + "/wwwroot", "Images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                // Console.WriteLine("File uploaded successfully!");
+
+                // Console.WriteLine("Directory.GetCurrentDirectory(): " + Directory.GetCurrentDirectory() + "/wwwroot");
+                // Console.WriteLine("File name: " + fileName);
+                // Console.WriteLine("File path: " + filePath);
+            }
+
             Tweets tweet = new Tweets();
 
             tweet.Content = detail;
             tweet.Title = title;
+            tweet.ImageName = fileName;
+            tweet.ImagePath = filePath;
             tweet.LikesCount = 0;
             tweet.Tags = new Tags();
             tweet.Tags.Tag1 = newTags[0];

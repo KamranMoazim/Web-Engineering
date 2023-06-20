@@ -1,0 +1,26 @@
+@page "/pc7"
+
+<h1>TwoWayBinding - Parent Component</h1>
+
+@* <input type="number" @bind-value="@number" @bind-value:event="oninput" />
+<input type="checkbox" @bind-checked="@isCheck" @bind-checked:event="onchange" /> *@
+
+<input type="number" @bind="@number" @bind:event="oninput" />
+<input type="checkbox" @bind="@isCheck" @bind:event="onchange" />
+
+<button class="btn btn-primary" @onclick="IncrementNumber">Increment</button>
+
+<h3>Counter @number</h3>
+<h3>Check @isCheck</h3>
+
+@code {
+
+    public int number { get; set; } = 0;
+
+    public bool isCheck { get; set; }
+
+    public void IncrementNumber()
+    {
+        number++;
+    }
+}

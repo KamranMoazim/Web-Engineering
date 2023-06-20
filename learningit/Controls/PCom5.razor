@@ -1,0 +1,20 @@
+<h1>Child</h1>
+
+
+<div>
+    @Section1
+</div>
+
+<div>
+    @Section2
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment Section1 { get; set; }
+
+    [Parameter]
+    public RenderFragment Section2 { get; set; }
+
+}

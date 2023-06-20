@@ -1,0 +1,18 @@
+@page "/pc1"
+
+<h1>Parent Component</h1>
+<p>- @MyStudent.Id - @MyStudent.Name</p>
+
+<PCom3 OnStudentChanged="HandleValidSubmitFromChild" />
+
+
+@code {
+    public Student MyStudent { get; set; } = new Student { Id = 10, Name = "Default Student in Parent" };
+
+    public void HandleValidSubmitFromChild(Student student)
+    {
+        MyStudent = student;
+        Console.WriteLine("HandleValidSubmitFromChild");
+    }
+
+}

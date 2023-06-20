@@ -1,0 +1,24 @@
+<h1>Child</h1>
+
+
+<div>
+    @foreach (Course item in list)
+    {
+        @Section1(item)
+    }
+</div>
+
+@code {
+
+    List<Course> list = new List<Course>{
+new Course{Id=1,Name="C#",StudentId=1},
+new Course{Id=2,Name="Java",StudentId=1},
+new Course{Id=3,Name="Python",StudentId=2},
+new Course{Id=4,Name="C++",StudentId=2},
+};
+
+    [Parameter]
+    public RenderFragment<Course> Section1 { get; set; }
+
+
+}

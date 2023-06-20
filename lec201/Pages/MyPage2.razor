@@ -1,0 +1,26 @@
+﻿@page "/MyPage2"
+
+
+<h1>Parent</h1>
+<h1>ParentMessage - @Message</h1>
+
+<Child MyCallback="@parentUpdateMessage" Message="@Message"></Child>
+
+@code {
+
+    public string Message { get; set; } = "";
+
+    public void parentUpdateMessage(string me)
+    {
+        if (Message != "")
+        {
+            Message = "";
+        }
+        else
+        {
+            @* Message = "Message Added From Parent"; *@
+            Message = me;
+        }
+    }
+
+}

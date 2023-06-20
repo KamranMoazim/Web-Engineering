@@ -1,0 +1,65 @@
+<h1>Child Component - @Number</h1>
+
+<button @onclick="clickMethod">Click</button>
+
+@code {
+
+    [Parameter]
+    public int Number { get; set; }
+
+    public void clickMethod()
+    {
+        Console.WriteLine("------- child - clickMethod");
+        Number++;
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("child - SetParametersAsync");
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("child - OnInitialized");
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("child - OnInitializedAsync");
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("child - OnParametersSet");
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("child - OnParametersSetAsync");
+        await base.OnParametersSetAsync();
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("child - ShouldRender");
+        return base.ShouldRender();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("child - OnAfterRender");
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine("child - OnAfterRenderAsync");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}

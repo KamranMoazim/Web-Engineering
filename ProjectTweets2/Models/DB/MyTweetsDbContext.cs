@@ -93,9 +93,40 @@ namespace ProjectTweets2.Models.DB
                 .WithMany(e => e.Followee)
                 .UsingEntity<UserSet>();
 
-
-
-
         }
+
+
+        public override int SaveChanges()
+        {
+            var changeTracker = this.ChangeTracker;
+
+            foreach (var entry in changeTracker.Entries())
+            {
+                if (entry.State.Equals(EntityState.Added))
+                {
+                    foreach (var item in entry.Members)
+                    {
+                        if (item.Metadata.Name.Equals("CreatedAt"))
+                        {
+                            item.CurrentValue = DateTime.Now;
+                        }
+                    }
+
+                }
+                else if (entry.State.Equals(EntityState.Modified))
+                {
+                    foreach (var item in entry.Members)
+                    {
+                        if (item.Metadata.Name.Equals("UpdatedAt"))
+                        {
+                            item.CurrentValue = DateTime.Now;
+                        }
+                    }
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
     }
 }

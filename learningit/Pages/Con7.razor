@@ -1,0 +1,22 @@
+@page "/pc6"
+
+<h1>OneWayBinding - Parent Component - Counter @number</h1>
+
+<input type="number" value="@number" @onchange="MyFunc" />
+<button class="btn btn-primary" @onclick="IncrementNumber">Increment</button>
+
+
+@code {
+
+    public int number { get; set; } = 0;
+
+    public void IncrementNumber()
+    {
+        number++;
+    }
+    public void MyFunc(ChangeEventArgs e)
+    {
+        int.TryParse(e.Value.ToString(), out var val);
+        number = val;
+    }
+}

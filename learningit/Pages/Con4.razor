@@ -1,0 +1,28 @@
+@page "/pc3"
+
+<h1>Parent Component</h1>
+
+
+<PCom5>
+    <Section1>
+        <h5>Section 1 - Some text without input box</h5>
+    </Section1>
+    <Section2>
+        <h5>Section 2 - Some text</h5>
+        @if (isSectionVisible)
+        {
+            <label>Enter Name</label>
+            <input type="text" />
+        }
+        else
+        {
+            <label>Enter Name HEHEHE</label>
+            <input type="text" />
+        }
+    </Section2>
+</PCom5>
+
+@code {
+    bool isSectionVisible = true;
+
+}

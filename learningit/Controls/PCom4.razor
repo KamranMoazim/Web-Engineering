@@ -1,0 +1,13 @@
+<h1>Child - @message</h1>
+
+@code {
+
+    public string message { get; set; } = "default Hello World!";
+
+    public void SetMessage(string message)
+    {
+        this.message = message;
+        StateHasChanged();
+    }
+
+}
