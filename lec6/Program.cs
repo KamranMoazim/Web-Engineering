@@ -18,7 +18,7 @@ namespace lec6
                 ! SqlCommand
                     - ExecuteNonQuery() --> insert / update / delete
                         it returns int -- means how many records has changed / updated
-                        
+
                     - ExecuteReader() --> select
                         it returns SqlDataReader class object
 
@@ -28,11 +28,9 @@ namespace lec6
 
 
             /*
-
                 MSSQLLocalDB
                 SqlServer ---> Express Edition
                 SqlServerManagementStudio
-            
             */
 
             Console.WriteLine("Hello World!");

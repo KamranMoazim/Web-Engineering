@@ -1,0 +1,12 @@
+dotnet new sln -n MySolution
+dotnet new classlib -n SharedProject
+dotnet sln add SharedProject/SharedProject.csproj
+dotnet new webapi -n ServerProject
+dotnet sln add ServerProject/ServerProject.csproj
+dotnet new blazorwasm -n ClientProject
+dotnet sln add ClientProject/ClientProject.csproj
+cd ServerProject
+dotnet add reference ../SharedProject/SharedProject.csproj
+dotnet build
+dotnet run --project ServerProject/ServerProject.csproj &
+dotnet run --project ClientProject/ClientProject.csproj

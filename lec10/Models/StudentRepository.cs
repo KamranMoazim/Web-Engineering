@@ -35,5 +35,9 @@ namespace lec10.Models
             return _students;
         }
 
+        // delte
+        // update
+        // CRUD -
+
     }
 }

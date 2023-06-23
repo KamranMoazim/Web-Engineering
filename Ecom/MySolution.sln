@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecom.Shared", "Ecom.Shared\Ecom.Shared.csproj", "{EBC39A89-6777-4F38-ACA4-1BECE32B17A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecom.Server", "Ecom.Server\Ecom.Server.csproj", "{420166D5-9921-42E0-B67C-B65C4D40FBAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecom.Client", "Ecom.Client\Ecom.Client.csproj", "{83E94E67-3B54-4581-B01F-FCB81A07AC63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBC39A89-6777-4F38-ACA4-1BECE32B17A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC39A89-6777-4F38-ACA4-1BECE32B17A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC39A89-6777-4F38-ACA4-1BECE32B17A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC39A89-6777-4F38-ACA4-1BECE32B17A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{420166D5-9921-42E0-B67C-B65C4D40FBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{420166D5-9921-42E0-B67C-B65C4D40FBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{420166D5-9921-42E0-B67C-B65C4D40FBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{420166D5-9921-42E0-B67C-B65C4D40FBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E94E67-3B54-4581-B01F-FCB81A07AC63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E94E67-3B54-4581-B01F-FCB81A07AC63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E94E67-3B54-4581-B01F-FCB81A07AC63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E94E67-3B54-4581-B01F-FCB81A07AC63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
