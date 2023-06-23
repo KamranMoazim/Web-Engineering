@@ -11,6 +11,12 @@ namespace Ecom.Client.Services.ProductService
             this._httpClient = httpClient;
         }
 
+        public async Task<ServiceResponse<Product>> GetProduct(int productId)
+        {
+            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<Product>>($"api/product/{productId}");
+            return response;
+        }
+
         public async Task GetProducts()
         {
             var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product");
@@ -18,6 +24,7 @@ namespace Ecom.Client.Services.ProductService
             {
                 Products = response.Data;
             }
+
         }
     }
 }

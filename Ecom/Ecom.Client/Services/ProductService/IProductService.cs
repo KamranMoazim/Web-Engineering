@@ -9,5 +9,6 @@ namespace Ecom.Client.Services.ProductService
         List<Product> Products { get; set; }
 
         Task GetProducts();
+        Task<ServiceResponse<Product>> GetProduct(int productId);
     }
 }
