@@ -1,6 +1,7 @@
 global using System.Net.Http.Json;
 global using Ecom.Shared;
 using Ecom.Client;
+using Ecom.Client.Services.CategoryService;
 using Ecom.Client.Services.ProductService;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -26,5 +27,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 await builder.Build().RunAsync();

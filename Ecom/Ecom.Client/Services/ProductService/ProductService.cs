@@ -6,6 +6,8 @@ namespace Ecom.Client.Services.ProductService
         private readonly HttpClient _httpClient;
         public List<Product> Products { get; set; } = new List<Product>();
 
+        public event Action ProductsChanged;
+
         public ProductService(HttpClient httpClient)
         {
             this._httpClient = httpClient;
@@ -17,13 +19,21 @@ namespace Ecom.Client.Services.ProductService
             return response;
         }
 
-        public async Task GetProducts()
+        public async Task GetProducts(string categoryUrl = null)
         {
-            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product");
+            var url = categoryUrl == null ? "api/product" : $"api/product/category/{categoryUrl}";
+
+            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(url);
             if (response != null && response.Success)
             {
                 Products = response.Data;
+                // foreach (var item in Products)
+                // {
+                //     Console.WriteLine(item.ProductVariants.Count);
+                // }
             }
+
+            ProductsChanged.Invoke();
 
         }
     }
