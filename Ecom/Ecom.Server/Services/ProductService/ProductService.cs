@@ -105,17 +105,48 @@ namespace Ecom.Server.Services.ProductService
             };
         }
 
-        public async Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        public async Task<ServiceResponse<ProductSearchResult>> SearchProducts(string searchText, int page)
         {
-            List<Product> products = await FindProductsBySearchText(searchText);
 
-            var response = new ServiceResponse<List<Product>>()
+            var pageResults = 2f;
+            var pageCount = Math.Ceiling((await FindProductsBySearchText(searchText)).Count / pageResults);
+
+            List<Product> products = await _context.Products
+                            .Where(p =>
+                                p.Title.ToLower().Contains(searchText.ToLower())
+                                ||
+                                p.Description.ToLower().Contains(searchText.ToLower())
+                            )
+                            .Include(p => p.ProductVariants)
+                            .Skip((page - 1) * (int)pageResults)
+                            .Take((int)pageResults)
+                            .ToListAsync();
+
+            var response = new ServiceResponse<ProductSearchResult>()
             {
-                Data = products,
+                Data = new ProductSearchResult
+                {
+                    Products = products,
+                    CurrentPage = page,
+                    Pages = (int)pageCount
+                }
             };
 
             return response;
+
         }
+
+        // public async Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        // {
+        //     List<Product> products = await FindProductsBySearchText(searchText);
+
+        //     var response = new ServiceResponse<List<Product>>()
+        //     {
+        //         Data = products,
+        //     };
+
+        //     return response;
+        // }
 
         private async Task<List<Product>> FindProductsBySearchText(string searchText)
         {
@@ -128,5 +159,6 @@ namespace Ecom.Server.Services.ProductService
                             .Include(p => p.ProductVariants)
                             .ToListAsync();
         }
+
     }
 }

@@ -33,6 +33,19 @@ else
             </li>
         }
     </ul>
+
+    @for (int i = 1; i <= ProductService.PageCount; i++)
+    {
+        @if (i == ProductService.CurrentPage)
+        {
+            <a class="btn btn-info page-selection" href="/search/@ProductService.LastSearchText/@i">@i</a>
+        }
+        else
+        {
+            <a class="btn btn-outline-info page-selection" href="/search/@ProductService.LastSearchText/@i">@i</a>
+        }
+
+    }
 }
 
 @code {

@@ -7,7 +7,9 @@ namespace Ecom.Client.Services.ProductService
         private readonly HttpClient _httpClient;
         public List<Product> Products { get; set; } = new List<Product>();
         public string Message { get; set; } = "Loading Products...";
-
+        public int CurrentPage { get; set; } = 1;
+        public int PageCount { get; set; } = 0;
+        public string LastSearchText { get; set; } = string.Empty;
 
         public ProductService(HttpClient httpClient)
         {
@@ -28,26 +30,35 @@ namespace Ecom.Client.Services.ProductService
             if (response != null && response.Success)
             {
                 Products = response.Data;
-                // foreach (var item in Products)
-                // {
-                //     Console.WriteLine(item.ProductVariants.Count);
-                // }
             }
 
-            // Console.WriteLine("ProductsChanged -- " + ProductsChanged);
+            CurrentPage = 1;
+            PageCount = 0;
+
+            if (Products.Count == 0)
+            {
+                Message = "No Products Found ";
+            }
+
             ProductsChanged.Invoke();
 
         }
 
-        public async Task SearchProducts(string searchText)
+        public async Task SearchProducts(string searchText, int page)
         {
-            var url = $"api/product/search/{searchText}";
+            var url = $"api/product/search/{searchText}/{page}";
 
-            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(url);
+            var response = await _httpClient.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>(url);
             if (response != null && response.Success)
             {
-                Products = response.Data;
+                Products = response.Data.Products;
+                CurrentPage = response.Data.CurrentPage;
+                PageCount = response.Data.Pages;
             }
+
+            LastSearchText = searchText;
+
+
             if (Products.Count == 0) Message = "No Products Found ";
 
             ProductsChanged.Invoke();
