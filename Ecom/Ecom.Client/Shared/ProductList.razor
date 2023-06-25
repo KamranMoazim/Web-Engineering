@@ -3,9 +3,9 @@
 
 <h1>ProductLists</h1>
 
-@if (ProductService.Products == null && ProductService.Products.Count == 0)
+@if (ProductService.Products == null || ProductService.Products.Count == 0)
 {
-    <p><em>Loading...</em></p>
+    <p><em> @ProductService.Message </em></p>
 }
 else
 {
@@ -38,11 +38,13 @@ else
 @code {
     protected override void OnInitialized()
     {
+        Console.WriteLine("Here I am ProductList.razor - OnInitialized");
         ProductService.ProductsChanged += StateHasChanged;
     }
 
     public void Dispose()
     {
+        Console.WriteLine("Here I am ProductList.razor - Dispose");
         ProductService.ProductsChanged -= StateHasChanged;
     }
 }

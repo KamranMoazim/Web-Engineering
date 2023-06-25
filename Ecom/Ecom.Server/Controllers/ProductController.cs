@@ -36,5 +36,19 @@ namespace Ecom.Server.Controllers
             return Ok(response);
         }
 
+        [HttpGet("search/{searchText}")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProductsBySearchText(string searchText)
+        {
+            var response = await _productService.SearchProducts(searchText);
+            return Ok(response);
+        }
+
+        [HttpGet("searchsuggestions/{searchText}")]
+        public async Task<ActionResult<ServiceResponse<List<string>>>> GetProductsSearchSuggestions(string searchText)
+        {
+            var response = await _productService.GetProductsSearchSuggestions(searchText);
+            return Ok(response);
+        }
+
     }
 }
