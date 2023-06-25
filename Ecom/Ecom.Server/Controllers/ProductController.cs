@@ -50,5 +50,12 @@ namespace Ecom.Server.Controllers
             return Ok(response);
         }
 
+        [HttpGet("featured")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetFeaturedProducts()
+        {
+            var response = await _productService.GetFeaturedProducts();
+            return Ok(response);
+        }
+
     }
 }

@@ -12,6 +12,8 @@ namespace Ecom.Shared
         public Category? Category { get; set; }
         public int CategoryId { get; set; }
 
+        public bool Featured { get; set; } = false;
+
         public List<ProductVariant> ProductVariants { get; set; } = new List<ProductVariant>();
     }
 }

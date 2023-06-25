@@ -1,7 +1,6 @@
 
 
 using Ecom.Server.Data;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Ecom.Server.Services.ProductService
 {
@@ -12,6 +11,16 @@ namespace Ecom.Server.Services.ProductService
         public ProductService(DataContext context)
         {
             this._context = context;
+        }
+
+        public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
+        {
+            var products = await _context.Products.Where(p => p.Featured).Include(p => p.ProductVariants).ToListAsync();
+            var response = new ServiceResponse<List<Product>>()
+            {
+                Data = products,
+            };
+            return response;
         }
 
         public async Task<ServiceResponse<Product>> GetProductAsync(int productId)

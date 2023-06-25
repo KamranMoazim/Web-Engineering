@@ -22,7 +22,7 @@ namespace Ecom.Client.Services.ProductService
 
         public async Task GetProducts(string categoryUrl = null)
         {
-            var url = categoryUrl == null ? "api/product" : $"api/product/category/{categoryUrl}";
+            var url = categoryUrl == null ? "api/product/featured" : $"api/product/category/{categoryUrl}";
 
             var response = await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>(url);
             if (response != null && response.Success)

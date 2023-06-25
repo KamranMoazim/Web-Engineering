@@ -10,5 +10,6 @@ namespace Ecom.Server.Services.ProductService
         Task<ServiceResponse<List<Product>>> GetProductsByCategory(string categoryUrl);
         Task<ServiceResponse<List<Product>>> SearchProducts(string searchText);
         Task<ServiceResponse<List<string>>> GetProductsSearchSuggestions(string searchText);
+        Task<ServiceResponse<List<Product>>> GetFeaturedProducts();
     }
 }
