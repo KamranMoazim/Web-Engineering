@@ -1,6 +1,7 @@
 global using Ecom.Shared;
 global using Microsoft.EntityFrameworkCore;
 using Ecom.Server.Data;
+using Ecom.Server.Services.CartService;
 using Ecom.Server.Services.CategoryService;
 using Ecom.Server.Services.ProductService;
 
@@ -30,6 +31,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 var app = builder.Build();
 

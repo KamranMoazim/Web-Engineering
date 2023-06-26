@@ -108,7 +108,7 @@ namespace Ecom.Server.Services.ProductService
         public async Task<ServiceResponse<ProductSearchResult>> SearchProducts(string searchText, int page)
         {
 
-            var pageResults = 2f;
+            var pageResults = 2f; // This line declares a variable pageResults and assigns it the value 2f, which represents the number of search results to be displayed per page.
             var pageCount = Math.Ceiling((await FindProductsBySearchText(searchText)).Count / pageResults);
 
             List<Product> products = await _context.Products
