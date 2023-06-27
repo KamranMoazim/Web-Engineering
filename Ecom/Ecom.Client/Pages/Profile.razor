@@ -16,13 +16,13 @@
 
 
     <div class="mb-3">
-        <label for="password">Password</label>
+        <label for="password">New Password</label>
         <InputText id="password" class="form-control" type="password" @bind-Value="request.Password" />
         <ValidationMessage For="@(() => request.Password)" />
     </div>
 
     <div class="mb-3">
-        <label for="confirmPassword">Confirm Password</label>
+        <label for="confirmPassword">Confirm New Password</label>
         <InputText id="confirmPassword" class="form-control" type="password" @bind-Value="request.ConfirmPassword" />
         <ValidationMessage For="@(() => request.ConfirmPassword)" />
     </div>

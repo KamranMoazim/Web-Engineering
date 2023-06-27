@@ -86,7 +86,7 @@ namespace Ecom.Server.Services.AuthService
         {
             var response = new ServiceResponse<bool>();
 
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await _context.Users.FindAsync(userId);
 
             if (user == null)
             {

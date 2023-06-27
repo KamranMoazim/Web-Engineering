@@ -1,6 +1,7 @@
 
 using System.Security.Claims;
 using Ecom.Server.Services.AuthService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecom.Server.Controllers
@@ -48,9 +49,12 @@ namespace Ecom.Server.Controllers
 
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("change-password"), Authorize]
         public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string newPassword)
         {
+
+            Console.WriteLine("newPassword: " + newPassword);
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var response = await _authService.ChangePassword(int.Parse(userId), newPassword);
