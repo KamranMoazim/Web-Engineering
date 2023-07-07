@@ -22,6 +22,25 @@ namespace Ecom.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Ecom.Shared.CartItem", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProductId", "ProductTypeId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("Ecom.Shared.Category", b =>
                 {
                     b.Property<int>("Id")

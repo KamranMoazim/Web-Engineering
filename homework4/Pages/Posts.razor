@@ -1,0 +1,18 @@
+﻿@page "/posts"
+
+<PageTitle>All Posts</PageTitle>
+<h1>All Posts</h1>
+
+<AllPostsCompo AllPosts="postRepo.GetAllPosts()" OrderMainPageListCallBack="OrderList" />
+
+
+
+
+@code {
+    public PostRepo postRepo { get; set; } = new PostRepo();
+
+    void OrderList(string order)
+    {
+        postRepo.OrderList(order);
+    }
+}

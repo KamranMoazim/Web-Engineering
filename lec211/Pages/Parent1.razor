@@ -1,0 +1,26 @@
+@page "/parent1"
+
+
+<PChild>
+    @* <ChildContent>
+    <h3>this is for Child Component - ChildContent - @context</h3>
+    </ChildContent> *@
+
+    <MyUi Context="data">
+        Id - @data.Id
+        <hr />
+        Title - @data.Title
+        <hr />
+        Price - @data.Price
+    </MyUi>
+
+</PChild>
+
+@*
+? Templated Component
+? ----- to send UI from Parent Component to Child Component
+*@
+
+@code {
+    @* List<string> fruits = new List<string> { "apple", "orange", "" }; *@
+}

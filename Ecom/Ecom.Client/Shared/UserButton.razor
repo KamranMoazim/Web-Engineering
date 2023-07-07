@@ -1,6 +1,7 @@
 @inject NavigationManager NavigationManager;
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 @inject ILocalStorageService LocalStorageService;
+@inject ICartService CartService;
 
 <div class="dropdown">
     <button @onclick="ToggleUserMenu" @onfocusout="HideUserMenu" class="btn btn-secondary dropdown-toggle user-button">
@@ -43,6 +44,7 @@
     {
         await LocalStorageService.RemoveItemAsync("authToken");
         @* await LocalStorageService.RemoveItemAsync("authTokenExpiration"); *@
+        await CartService.GetCartItemsCount();
         await AuthenticationStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("/");
     }

@@ -10,5 +10,7 @@ namespace Ecom.Client.Services.CartService
         Task<List<CartProductResponse>> GetCartProducts();
         Task RemoveProductFromCart(int productId, int productTypeId);
         Task UpdateQuantity(CartProductResponse cartProductResponse);
+        Task StoreCartItems(bool emptyLocalCart);
+        Task GetCartItemsCount();
     }
 }

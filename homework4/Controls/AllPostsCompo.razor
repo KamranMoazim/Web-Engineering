@@ -1,0 +1,34 @@
+<PageTitle>All Posts</PageTitle>
+
+<ul>
+    @foreach (var post in AllPosts)
+    {
+        <a href="/posts/@post.Id">
+            <li>@post.Id - @post.Title</li>
+        </a>
+    }
+</ul>
+
+<button @onclick="OrderingAsc">Order Asc</button>
+<button @onclick="OrderingDesc">Order Desc</button>
+
+
+@code {
+    [Parameter]
+    public List<Post> AllPosts { get; set; }
+
+
+    [Parameter]
+    public EventCallback<string> OrderMainPageListCallBack { get; set; }
+
+    public bool IsAsc { get; set; } = true;
+
+    public void OrderingAsc()
+    {
+        OrderMainPageListCallBack.InvokeAsync("asc");
+    }
+    public void OrderingDesc()
+    {
+        OrderMainPageListCallBack.InvokeAsync("desc");
+    }
+}

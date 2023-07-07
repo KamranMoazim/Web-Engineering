@@ -1,0 +1,18 @@
+<div>
+    @ChildContent(Message)
+</div>
+<div>
+    @ChildContentDiff
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment<string> ChildContent { get; set; } // this name should be exact - ChildContent
+
+    [Parameter]
+    public RenderFragment ChildContentDiff { get; set; } // ChildContentDiff - now we have to do something in Parent
+
+    public string Message { get; set; } = "PassedString in child";
+
+}

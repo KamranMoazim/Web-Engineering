@@ -1,0 +1,29 @@
+<PageTitle>@CurrentPost.Title</PageTitle>
+
+<div style="background-color: aqua;">
+    <h5>UI - Info about Post ID</h5>
+    @UI(CurrentPost.Id)
+</div>
+
+<div>
+    <h1>@CurrentPost.Title</h1>
+    <p>@CurrentPost.Body</p>
+    <br />
+    <p>Posted by: <b>@CurrentPost.PostedBy</b></p>
+    <p>Posted on: <b>@CurrentPost.PostedDate</b></p>
+</div>
+
+<CascadingValue Name="Id" Value="CurrentPost.Id">
+    <PostComments />
+</CascadingValue>
+
+
+@code {
+    [Parameter]
+    public Post CurrentPost { get; set; }
+
+    [Parameter]
+    public RenderFragment<int> UI { get; set; }
+
+
+}

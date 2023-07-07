@@ -1,0 +1,20 @@
+<div>
+    <h4>All Comments Are</h4>
+    <ul>
+        @foreach (var comment in commentRepo.GetCommentsByPostId(PostId))
+        {
+            <li>
+                @comment.Id - @comment.Content
+            </li>
+        }
+    </ul>
+</div>
+
+
+@code {
+    [CascadingParameter(Name = "Id")]
+    public int PostId { get; set; }
+
+    public CommentRepo commentRepo { get; set; } = new CommentRepo();
+
+}

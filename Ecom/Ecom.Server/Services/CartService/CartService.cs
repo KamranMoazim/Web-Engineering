@@ -1,4 +1,5 @@
 
+using System.Security.Claims;
 using Ecom.Server.Data;
 
 namespace Ecom.Server.Services.CartService
@@ -6,11 +7,15 @@ namespace Ecom.Server.Services.CartService
     public class CartService : ICartService
     {
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartService(DataContext context)
+        public CartService(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
+            this._httpContextAccessor = httpContextAccessor;
             _context = context;
         }
+
+        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         public async Task<ServiceResponse<List<CartProductResponse>>> GetCartProducts(List<CartItem> cartItems)
         {
@@ -55,6 +60,38 @@ namespace Ecom.Server.Services.CartService
             }
 
             return result;
+        }
+
+        public async Task<ServiceResponse<List<CartProductResponse>>> StoreCartItems(List<CartItem> cartItems)
+        {
+            cartItems.ForEach(cartItem => cartItem.UserId = GetUserId());
+            _context.CartItems.AddRange(cartItems);
+            await _context.SaveChangesAsync();
+
+            // return await GetCartProducts(
+            //     await _context.CartItems
+            //         .Where(ci => ci.UserId == GetUserId())
+            //         .ToListAsync()
+            // );
+            return await GetDbCartProducts();
+        }
+
+        public async Task<ServiceResponse<int>> GetCartItemsCount()
+        {
+            var count = await _context.CartItems
+                .Where(ci => ci.UserId == GetUserId())
+                .CountAsync();
+            return new ServiceResponse<int> { Data = count };
+
+        }
+
+        public async Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProducts()
+        {
+            return await GetCartProducts(
+                await _context.CartItems
+                    .Where(ci => ci.UserId == GetUserId())
+                    .ToListAsync()
+            );
         }
     }
 }

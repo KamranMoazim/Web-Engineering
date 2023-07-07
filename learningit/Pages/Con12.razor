@@ -1,0 +1,61 @@
+@page "/pc12"
+
+<EditForm Model="@person" OnSubmit="@Submit" OnValidSubmit="@Submit" OnInvalidSubmit="@Test">
+
+    <DataAnnotationsValidator />
+    <ValidationSummary></ValidationSummary>
+
+    <label for="Name">Name : </label>
+    <InputText id="Name" @bind-Value="person.Name" />
+    <ValidationMessage For="@(() => person.Name)" />
+    <br />
+
+    <label for="Age">Age : </label>
+    <InputNumber id="Age" @bind-Value="person.Age" />
+    <ValidationMessage For="@(() => person.Age)" />
+    <br />
+
+    <label for="Email">Email : </label>
+    <InputText id="Email" @bind-Value="person.Email" />
+    <ValidationMessage For="@(() => person.Email)" />
+    <br />
+
+    <input type="submit" value="Submit" />
+
+</EditForm>
+
+@code {
+
+    public Person person { get; set; } = new Person
+        {
+            Name = "John Doe",
+            Email = "john@mail.com",
+            Age = 30
+        };
+
+    void Submit()
+    {
+        Console.WriteLine("Form submitted");
+    }
+
+    void Test()
+    {
+        Console.WriteLine("Invalid Form cannot be submitted");
+    }
+
+
+    public class Person
+    {
+        [Required]
+        [StringLength(10, ErrorMessage = "Name is too long.")]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [Range(18, 60, ErrorMessage = "Age must be between 18 and 60")]
+        public int Age { get; set; }
+    }
+}

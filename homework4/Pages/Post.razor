@@ -1,0 +1,24 @@
+@page "/posts/{id:int}"
+
+
+<PostCompo CurrentPost="@postRepo.GetPostById(Id)">
+    <UI Context="id">
+        @if (id % 2 == 0)
+        {
+            <h1> EVEN - POST </h1>
+        }
+        else
+        {
+            <h1> ODD - POST </h1>
+        }
+    </UI>
+</PostCompo>
+
+
+@code {
+    public PostRepo postRepo { get; set; } = new PostRepo();
+
+    [Parameter]
+    public int Id { get; set; }
+
+}

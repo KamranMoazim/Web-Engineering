@@ -11,8 +11,7 @@
 
     private int GetCartItemsCount()
     {
-        var cart = LocalStorage.GetItem<List<CartItem>>("cart");
-        return cart != null ? cart.Count : 0;
+        return LocalStorage.GetItem<int>("cartItemsCount");
     }
 
     protected override async Task OnInitializedAsync()
