@@ -19,7 +19,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a asp-controller="Tweet" asp-action="SingleTweet">
+                                <a asp-controller="Tweet" asp-action="SingleTweet" asp-route-id="@item.Tweet.TweetId">
                                     @item.Tweet.Title
                                 </a>
                             </h5>

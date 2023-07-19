@@ -1,0 +1,34 @@
+@page "/p"
+
+<EditForm Model="@temp" OnValidSubmit="test1" OnInvalidSubmit="test2">
+    <InputText id="name" @bind-Value=temp.Name />
+    <InputText id="email" @bind-Value=temp.Email />
+</EditForm>
+
+
+@code {
+
+    public Test temp { get; set; } = new Test();
+
+    @* public void test1()
+{
+Console.WriteLine("OnValidSubmit");
+}
+
+public void test2()
+{
+Console.WriteLine("OnInValidSubmit");
+} *@
+
+
+    public class Test
+    {
+        [Required]
+        [MaxLength(6)]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+}

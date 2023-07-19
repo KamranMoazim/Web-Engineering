@@ -1,0 +1,31 @@
+<h3>In Child - Number : @ParentNumber</h3>
+
+
+this is One-Way Binding - <input type="text" value="@ParentNumber" />
+<br />
+this is Two-Way Binding - <input type="text" @bind-value="@ParentNumber" />
+<br />
+<button @onclick="IncrementValue">Updated</button>
+
+@code {
+    [Parameter]
+    public int ParentNumber { get; set; } = 0;
+
+    [Parameter]
+    public EventCallback<int> ParentNumberChanged { get; set; }
+
+
+    [Parameter]
+    public EventCallback<int> DiffNameNumberChanged { get; set; }
+
+
+
+    public void IncrementValue()
+    {
+        ParentNumber++;
+        ParentNumberChanged.InvokeAsync(ParentNumber);
+        DiffNameNumberChanged.InvokeAsync(ParentNumber);
+    }
+
+
+}

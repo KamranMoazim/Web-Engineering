@@ -9,6 +9,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR(); // out signalR has added as service
 
 
+builder.Services.AddMvc(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
+
 builder.Services.AddDistributedMemoryCache(); // when we use use session, it should be saved in Memory
 builder.Services.AddSession(); // this line will add session
 

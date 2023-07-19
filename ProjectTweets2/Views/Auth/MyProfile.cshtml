@@ -10,6 +10,16 @@
     Welcome, <h3>Mr. @Model.Username </h3>
 </div>
 
+<div class="container p-3">
+    <button class="btn btn-primary">
+        <a style="color: white; text-decoration: none;" asp-controller="Tweet" asp-action="MyTweets">My Tweets</a>
+    </button>
+    <button class="btn btn-primary">
+        <a style="color: white; text-decoration: none;" asp-controller="Tweet" asp-action="MySharedTweets">My
+            Sharings</a>
+    </button>
+</div>
+
 <form method="post" action="/Auth/MyProfile">
     <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">Email</label>

@@ -1,0 +1,59 @@
+﻿@page "/p"
+
+
+<h3>Number : @Number</h3>
+<h3>MyBool : @MyBool</h3>
+
+
+this is One-Way Binding - <input type="text" value="@Number" />
+<br />
+this is Two-Way Binding - <input type="text" @bind-value="@Number" />
+<br />
+<button @onclick="IncrementValue">Updated</button>
+
+
+
+<br />
+<br />
+<br />
+<h3>My Checkbox</h3>
+<br />
+this is One-Way Binding - <input type="checkbox" checked="@MyBool" />
+<br />
+this is Two-Way Binding - <input type="checkbox" @bind="@MyBool" />
+<br />
+<button @onclick="notValue">Updated</button>
+
+
+@code {
+    [Parameter]
+    public int Number { get; set; } = 1;
+
+    public bool MyBool { get; set; } = true;
+
+    public void IncrementValue()
+    {
+        Number++;
+    }
+
+    public void notValue()
+    {
+        MyBool = !MyBool;
+    }
+}
+
+
+
+@*
+
+DATA BINDING - MVVM uses same
+
+Destination - HTML control
+
+Source - Property
+
+BINDING TYPES -
+- 1 way - updating control would not show in property
+- 2 way - updating anywhere will show on both sides
+
+*@

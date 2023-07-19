@@ -38,6 +38,18 @@ namespace ProjectTweets2.Models.Repositories
         }
 
 
+        public List<Tweets> GetAllMySharedTweets(int userId)
+        {
+            List<int> mySharedTweetsList = _context.ReTweets.Where(t => t.UserId == userId).Select(t => t.TweetId).ToList();
+
+            List<Tweets> tweets = _context.Tweets.Where(t => mySharedTweetsList.Contains(t.TweetId)).ToList();
+
+            tweets = completeTheTweetsContents(tweets);
+
+            return tweets;
+        }
+
+
         public List<Tweets> GetTopTweets(int top)
         {
             List<Tweets> tweets = _context.Tweets.OrderByDescending(t => t.LikesCount).Take(top).ToList();
@@ -196,6 +208,18 @@ namespace ProjectTweets2.Models.Repositories
             return true;
         }
 
+
+        public bool DeleteSharedTweet(int tweetId)
+        {
+            var retweet = _context.ReTweets.Where(t => t.TweetId == tweetId).FirstOrDefault();
+
+
+            _context.ReTweets.Remove(retweet!);
+
+            _context.SaveChanges();
+            return true;
+        }
+
         public bool ShareATweet(int userId, int tweetId)
         {
             ReTweets? reTweets = _context.ReTweets.Where(t => t.UserId == userId && t.TweetId == tweetId).FirstOrDefault();
@@ -267,11 +291,9 @@ namespace ProjectTweets2.Models.Repositories
                 List<int> follweeUserSets = _context.UserSet.Where(x => x.UserId == tweet.UserId).Select(e => e.FollwerId).ToList();
 
 
-                tweet.Comments = _context.Comments.Where(c => c.TweetId == tweet.TweetId).ToList();
-
-                tweet.Tags = _context.Tags.Where(t => t.TagsId == tweet.TagsId).FirstOrDefault()!;
-
-                tweet.User = _context.User.Where(u => u.UserId == tweet.UserId).FirstOrDefault()!;
+                // tweet.Comments = _context.Comments.Where(c => c.TweetId == tweet.TweetId).ToList();
+                // tweet.Tags = _context.Tags.Where(t => t.TagsId == tweet.TagsId).FirstOrDefault()!;
+                // tweet.User = _context.User.Where(u => u.UserId == tweet.UserId).FirstOrDefault()!;
 
                 tweet.Comments = _context.Comments.Where(c => c.TweetId == tweet.TweetId).ToList();
 
@@ -305,13 +327,14 @@ namespace ProjectTweets2.Models.Repositories
 
             tweet.Comments = _context.Comments.Where(c => c.TweetId == tweet.TweetId).ToList();
 
+
+
             tweet.Tags = _context.Tags.Where(t => t.TagsId == tweet.TagsId).FirstOrDefault();
 
             tweet.User = _context.User.Where(u => u.UserId == tweet.UserId).FirstOrDefault();
 
             tweet.User.Follower = _context.User.Where(x => follwerUserSets.Contains(x.UserId)).ToList();
             tweet.User.Followee = _context.User.Where(x => follweeUserSets.Contains(x.UserId)).ToList();
-
 
             return tweet;
         }

@@ -113,6 +113,8 @@ document.getElementById("sendMessage").addEventListener("click", function (event
         return console.error(err.toString());
     });
     event.preventDefault();
+
+    document.getElementById("messageInput").value = "";
 });
 
 

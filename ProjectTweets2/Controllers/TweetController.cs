@@ -36,6 +36,22 @@ namespace ProjectTweets2.Controllers
             return View(ListOfTweets);
         }
 
+
+        [HttpGet("MySharedTweets")]
+        public IActionResult MySharedTweets()
+        {
+            if (CheckIfLoggedIn() == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            string? cookie = HttpContext.Request.Cookies[cookieName];
+            int userId = int.Parse(cookie!);
+            var ListOfTweets = tweetRepository.GetAllMySharedTweets(userId);
+
+            return View(ListOfTweets);
+        }
+
         [HttpPost("MyTweets/{tweetId}")]
         public IActionResult DeleteMyTweet(int tweetId)
         {
@@ -52,6 +68,24 @@ namespace ProjectTweets2.Controllers
             var ListOfTweets = tweetRepository.GetAllMyTweets(userId);
 
             return View("MyTweets", ListOfTweets);
+        }
+
+        [HttpPost("MySharedTweets/{tweetId}")]
+        public IActionResult DeleteMySharedTweets(int tweetId)
+        {
+            if (CheckIfLoggedIn() == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            string? cookie = HttpContext.Request.Cookies[cookieName];
+            int userId = int.Parse(cookie!);
+
+            tweetRepository.DeleteSharedTweet(tweetId);
+
+            var ListOfTweets = tweetRepository.GetAllMySharedTweets(userId);
+
+            return View("MySharedTweets", ListOfTweets);
         }
 
         [HttpGet("SingleTweet/{tweetId}")]
@@ -175,6 +209,8 @@ namespace ProjectTweets2.Controllers
         [HttpPost("SingleTweet/{tweetId}/CommentTweet")]
         public IActionResult CommentTweet(int tweetId, string comment)
         {
+            // return RedirectToRoute("SingleTweet", new { tweetId = tweetId });
+
             if (CheckIfLoggedIn() == 0)
             {
                 return RedirectToAction("Login", "Auth");
@@ -193,6 +229,7 @@ namespace ProjectTweets2.Controllers
 
 
             return View("SingleTweet", tweetModel);
+            // return RedirectToRoute("SingleTweet");
         }
 
         [HttpPost("SingleTweet/{tweetId}/LikeTweet")]

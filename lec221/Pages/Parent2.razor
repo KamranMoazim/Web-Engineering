@@ -1,0 +1,61 @@
+﻿@page "/p2"
+
+<h3>In-Parent - Number : @Number</h3>
+
+
+this is One-Way Binding - <input type="text" value="@Number" />
+<br />
+this is Two-Way Binding - <input type="text" @bind-value="@Number" />
+<br />
+<button @onclick="IncrementValue">Updated</button>
+
+
+
+<br />
+<br />
+<br />
+
+
+
+
+
+<Child @bind-ParentNumber="Number"></Child>
+
+
+<br />
+<br />
+<br />
+
+
+<Child @bind-ParentNumber="Number" @bind-ParentNumber:event="DiffNameNumberChanged"></Child>
+
+
+
+
+
+
+@code {
+    public int Number { get; set; } = 1;
+
+    public void IncrementValue()
+    {
+        Number++;
+    }
+
+}
+
+
+
+@*
+
+DATA BINDING - MVVM uses same
+
+Destination - HTML control
+
+Source - Property
+
+BINDING TYPES -
+- 1 way - updating control would not show in property
+- 2 way - updating anywhere will show on both sides
+
+*@
