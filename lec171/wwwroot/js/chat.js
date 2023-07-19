@@ -55,19 +55,6 @@ connection.on("Send", function (message) {
 
 
 
-// document.getElementById("sendButton").addEventListener("click", function (event) {
-//     var user = document.getElementById("userInput").value;
-//     var message = document.getElementById("messageInput").value;
-//     // to invoke server-side message
-//     connection.invoke("SendMessage", `${user} says ${message}`).catch(function (err) {
-//         return console.error(err.toString());
-//     });
-//     event.preventDefault();
-// });
-
-
-
-
 document.getElementById("sendMessageToGroup").addEventListener("click", function (event) {
     var group = document.getElementById("groupInput").value;
     var user = document.getElementById("userInput").value;

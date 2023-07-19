@@ -1,8 +1,23 @@
 @page "/p"
 
 <EditForm Model="@temp" OnValidSubmit="test1" OnInvalidSubmit="test2">
-    <InputText id="name" @bind-Value=temp.Name />
-    <InputText id="email" @bind-Value=temp.Email />
+    <ValidationSummary />
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" class="form-control" type="email" @bind-Value="temp.Email" />
+        <ValidationMessage For="@(() => temp.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="name">Name</label>
+        <InputText id="name" class="form-control" type="text" @bind-Value="temp.Name" />
+        <ValidationMessage For="@(() => temp.Name)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
 </EditForm>
 
 
